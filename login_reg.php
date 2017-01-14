@@ -15,7 +15,7 @@ if(isset($_POST['email'])){
 		$rows=mysqli_fetch_array($result);
 		if($rows[1]==$_POST['password']){
 			$_SESSION['account']=$_POST['username'];
-			echo "<div class=\"notice success\"><i class=\"icon-ok icon-large\"></i> Hello, ".$_SESSION['account']."\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+			echo "Success";
 		}else{
 			echo "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 帳號密碼錯誤\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
 		}
