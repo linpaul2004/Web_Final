@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/kickstart.js"></script>
+    <!-- KICKSTART -->
+    <link rel="stylesheet" href="css/kickstart.css" media="all" />
+    <!-- KICKSTART -->
+    <script>
+    function login() {
+        var oXHR = new XMLHttpRequest();
+        account = document.getElementById("acc1").value;
+        password = document.getElementById("pw1").value;
+        if (account && password) {
+            para = "username=" + account + "&password=" + password;
+            oXHR.open("POST", "login_reg.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    if (oXHR.responseText == "Success") {
+                        window.location = "lobby.html";
+                    } else {
+                        document.getElementById("result").innerHTML = oXHR.responseText;
+                    }
+                }
+            }
+            oXHR.send(para);
+        } else {
+            document.getElementById("result").innerHTML = "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 欄位不得為空\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+        }
+    }
+
+    function register() {
+        var oXHR = new XMLHttpRequest();
+        account = document.getElementById("acc2").value;
+        password = document.getElementById("pw2").value;
+        password2 = document.getElementById("pw3").value;
+        email = document.getElementById("em").value;
+        if (password != password2) {
+            document.getElementById("result").innerHTML = "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 密碼不一致\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+            return;
+        }
+        if (account && password && email && password2) {
+            para = "username=" + account + "&password=" + password + "&email=" + email;
+            oXHR.open("POST", "login_reg.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    document.getElementById("result").innerHTML = oXHR.responseText;
+                }
+            }
+            oXHR.send(para);
+        } else {
+            document.getElementById("result").innerHTML = "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 欄位不得為空\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Tabs Left -->
+    <ul class="tabs left">
+        <li><a href="#login">登入</a></li>
+        <li><a href="#reg">註冊</a></li>
+    </ul>
+    <div id="login" class="tab-content">
+        <form>
+            <!-- Text Field -->
+            <label for="acc1">帳號：</label>
+            <input id="acc1" type="text" />
+            <br>
+            <!-- Text Field -->
+            <label for="pw1">密碼：</label>
+            <input id="pw1" type="password" />
+            <br>
+            <button class="small" onclick="login()">登入</button>
+        </form>
+    </div>
+    <div id="reg" class="tab-content">
+        <form>
+            <!-- Text Field -->
+            <label for="acc2">帳號：</label>
+            <input id="acc2" type="text" />
+            <br>
+            <!-- Text Field -->
+            <label for="em">電子郵件：</label>
+            <input id="em" type="text" />
+            <br>
+            <!-- Text Field -->
+            <label for="pw2">密碼：</label>
+            <input id="pw2" type="password" />
+            <br>
+            <!-- Text Field -->
+            <label for="pw3">確認密碼：</label>
+            <input id="pw3" type="password" />
+            <br>
+            <button class="small" onclick="register()">註冊</button>
+        </form>
+    </div>
+    <div id="result"></div>
+</body>
+
+</html>
