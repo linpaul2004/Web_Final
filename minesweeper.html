@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>踩地雷</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <style>
+    body,
+    html {
+        font-family: 'VT323', sans-serif;
+        font-size: 20px;
+        color: #fff;
+        user-select: none;
+        cursor: default;
+        background: #333;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+    
+    header {
+        text-align: center;
+        padding: 1px;
+    }
+    
+    .game-control {
+        text-align: center;
+    }
+    
+    .levels {
+        padding: 10px 0 30px;
+    }
+    
+    .level {
+        cursor: pointer;
+        padding: 5px 0;
+        margin: 0 10px;
+    }
+    
+    .info span {
+        padding-right: 20px;
+    }
+    
+    #restart-btn {
+        font-family: 'VT323', sans-serif;
+        font-size: 20px;
+        background-color: gray;
+        width: 55px;
+        height: 30px;
+        position: relative;
+        top: 0px;
+        cursor: pointer;
+    }
+    
+    #board {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+    
+    .col {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cell {
+        color: #fff;
+        background: #666;
+        width: 30px;
+        height: 30px;
+        margin: 1px;
+        line-height: 30px;
+        font-size: 28px;
+        text-align: center;
+    }
+    
+    #slide {
+        pointer-events: none;
+        display: none;
+        text-transform: uppercase;
+        font-size: 220px;
+        position: absolute;
+        width: 200%;
+        height: 100%;
+        /*display: flex;*/
+        justify-content: flex-end;
+        left: 0%;
+        transition: left .4s ease-in-out;
+    }
+    
+    .msg-container {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <div id="slide">
+        <div class="msg-container">
+            <div id="msg"></div>
+        </div>
+    </div>
+    <header>
+        <h1>Minesweeper in JavaScript</h1>
+    </header>
+    <div class="game-control">
+        <span class="info">
+      Mines: <span id="mines"></span> Time: <span id="time"></span>Score: <span id="score"></span>
+        <button id="restart-btn" type="button">Reset</button>
+        </span>
+        <div class="levels">
+            Level: <span class="level" id="beginner">Beginner</span>
+            <span class="level" id="intermediate">Intermediate</span>
+            <span class="level" id="expert">Expert</span>
+        </div>
+    </div>
+    <div id="board"></div>
+    <script>
+    var Minesweeper = (function() {
+        var difficulties = {
+            beginner: {
+                width: 9,
+                height: 9,
+                numOfMines: 10
+            },
+            intermediate: {
+                width: 16,
+                height: 16,
+                numOfMines: 40
+            },
+            expert: {
+                width: 30,
+                height: 16,
+                numOfMines: 99
+            },
+        };
+        var prevDifficulty = undefined;
+        var mineBgColor = '#EF4836';
+        var revealBgColor = '#ABB7B7';
+        var hideBgColor = '#666';
+        var infoNumDigits = 3;
+        var timerInterval = undefined;
+
+        var msgSlide = document.getElementById('slide');
+
+
+        var win = function() {
+            return numOfRevealCells == difficulty.width * difficulty.height - difficulty.numOfMines;
+        };
+
+        var setDifficulty = function(diffName) {
+            difficulty = difficulties[diffName];
+
+            // Update interface
+            if (prevDifficulty) {
+                prevDifficulty.style.borderBottom = 'none';
+            }
+            prevDifficulty = document.getElementById(diffName);
+            prevDifficulty.style.borderBottom = '3px solid #fff';
+        };
+
+        var initApp = function() {
+            setDifficulty('beginner'); // Set difficulty
+            lvlListener();
+            init();
+        };
+
+
+        var init = function() {
+            toCheckStack = new Array();
+            mines = new Array();
+            numOfRevealCells = 0;
+
+            minesLeft = getNumOfMines();
+            updateMinesDisplay();
+            time = 600;
+            updateTimeDisplay();
+
+            Board.init(getWidth(), getHeight());
+            cellElems = Board.getCellElems();
+            generateMines();
+
+            timer();
+            moveListener();
+            restartListener();
+        };
+
+
+        var lvlListener = function() {
+            var lvlNames = Object.keys(difficulties);
+            lvlNames.forEach(function(lvl) {
+                document.getElementById(lvl).addEventListener('click', function() {
+                    setDifficulty(lvl);
+                    restart();
+                });
+            });
+        };
+
+
+        var restartListener = function() {
+            document.getElementById('restart-btn').addEventListener('click', restart);
+        };
+
+
+        var restart = function() {
+            hideMsg();
+            clearTimer();
+
+            Board.removeCells();
+            init();
+        };
+
+
+        var updateMinesDisplay = function() {
+            if (minesLeft >= 0) {
+                document.getElementById('mines').innerHTML = padZero(infoNumDigits, minesLeft);
+            } else {
+                document.getElementById('mines').innerHTML = '-' + padZero(infoNumDigits - 1, minesLeft * (-1));
+            }
+        };
+
+
+        var flag = function(cellElem) {
+            var cellObj = Board.getCellObjFromElem(cellElem);
+
+            if (cellObj.reveal && !cellObj.flag) return;
+
+            if (cellObj.flag) {
+                cellObj.flag = false;
+                cellElem.innerHTML = '';
+                Board.getCellObjFromElem(cellElem).reveal = false;
+                minesLeft++;
+            } else {
+                cellObj.flag = true;
+                cellElem.innerHTML = 'F';
+                Board.getCellObjFromElem(cellElem).reveal = true;
+                minesLeft--;
+            }
+            updateMinesDisplay();
+        };
+
+
+        var timer = function() {
+            for (var i = 0; i < cellElems.length; i++) {
+                cellElems[i].addEventListener('mousedown', function(e) {
+                    // remove event listeners
+                    for (var i = 0; i < cellElems.length; i++) {
+                        cellElems[i].removeEventListener(e.type, arguments.callee);
+                    }
+
+                    if (started) startTimer();
+                });
+            }
+        };
+
+
+        var startTimer = function(e) {
+            if (timerInterval) return; // fix multiple timers running
+
+            timerInterval = setInterval(function() {
+                if (--time < 0) {
+                    clearTimer();
+                    gameOver();
+                    return;
+                }
+                updateTimeDisplay();
+            }, 1000);
+        };
+
+
+        var updateTimeDisplay = function() {
+            document.getElementById('time').innerHTML = padZero(infoNumDigits, time);
+            document.getElementById('score').innerHTML = padZero(infoNumDigits + 1, time + numOfRevealCells * 10);
+        };
+
+
+        var padZero = function(totalDigits, num) {
+            var paddedNumStr = num;
+            for (var i = 1; i <= totalDigits; i++) {
+                // Num has i digits
+                if (num / Math.pow(10, i) < 1) {
+                    // Pad (totalDigits - i) number of zero
+                    for (var j = 0; j < totalDigits - i; j++) {
+                        paddedNumStr = '0' + paddedNumStr;
+                    }
+                    return paddedNumStr;
+                }
+            }
+        };
+
+
+        var moveListener = function() {
+            started = true;
+            for (var i = 0; i < cellElems.length; i++) {
+                cellElems[i].addEventListener('mousedown', clickAction);
+            }
+        };
+
+
+        var clickAction = function(ev) {
+            if (ev.which == 3) {
+                flag(this);
+            } else {
+                if (!Board.getCellObjFromElem(this).reveal) {
+                    if (!revealCells(this)) {
+                        gameOver();
+                    }
+
+                }
+            }
+        };
+
+
+        var explodeAll = function() {
+            for (mine of mines) {
+                explode(Board.getCellElem(mine[0], mine[1]));
+            }
+        };
+
+
+        var explode = function(mineElem) {
+            mineElem.style.backgroundColor = mineBgColor;
+        };
+
+
+        // Return true if no explosion, otherwise false
+        var revealCells = function(cellElem) {
+            var cellObj = Board.getCellObjFromElem(cellElem);
+
+            if (cellObj.isMine) {
+                explodeAll();
+                return false;
+            }
+
+            revealCell(cellObj);
+
+            // Show num of mines or reveal more cells
+            if (cellObj.mines > 0) {
+                cellElem.innerHTML = cellObj.mines;
+            } else {
+                revealNeighbors(cellElem);
+            }
+
+            if (win()) winGame();
+
+            return true;
+        };
+
+
+        var gameOver = function() {
+            document.getElementById('msg').innerHTML = 'Game Over!';
+            stopGame();
+        };
+
+
+        var winGame = function() {
+            document.getElementById('msg').innerHTML = 'You Win!';
+            stopGame();
+            sendScore();
+        };
+
+
+        var stopGame = function() {
+            started = false;
+            for (var i = 0; i < cellElems.length; i++) {
+                cellElems[i].removeEventListener('mousedown', clickAction);
+            }
+            showMsg();
+            clearTimer();
+            sendScore();
+        };
+
+        var sendScore = function() {
+            var oXHR = new XMLHttpRequest();
+            var username = "<?php echo($_SESSION['account']) ?>"
+            var score = document.getElementById("score").innerHTML;
+            if (username) {
+                para = "game=minesweeper" + "&score=" + score;
+                oXHR.open("POST", "send_score.php", true);
+                oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                oXHR.onreadystatechange = function() {
+                    if (oXHR.readyState == 4 && oXHR.status == 200) {
+                        if (oXHR.responseText == "Success") {
+                            window.location = "scoreboard.php";
+                        } else {
+                            document.getElementById("result").innerHTML = oXHR.responseText;
+                        }
+                    }
+                }
+                oXHR.send(para);
+            } else {
+                document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">尚未登入</p>";
+            }
+        }
+
+
+        var clearTimer = function() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        };
+
+
+        var showMsg = function() {
+
+            msgSlide.style.display = 'flex';
+            setTimeout(slideIn, 100);
+        };
+
+        var slideIn = function() {
+            msgSlide.style.left = '-100%';
+        };
+
+
+        var hideMsg = function() {
+            msgSlide.style.left = '0';
+            setTimeout(hideSlide, 100);
+        };
+
+
+        var hideSlide = function() {
+            msgSlide.style.display = 'none';
+        };
+
+
+        var revealCell = function(cellObj) {
+            cellObj.reveal = true;
+            Board.getCellElemFromObj(cellObj).style.backgroundColor = revealBgColor;
+            numOfRevealCells++;
+        };
+
+
+        var hideCell = function(cellObj) {
+            cellObj.reveal = false;
+            Board.getCellElemFromObj(cellObj).style.backgroundColor = hideBgColor;
+        };
+
+
+        var revealNeighbors = function(cellElem) {
+            var cellObj = Board.getCellObjFromElem(cellElem);;
+
+            toCheckStack = toCheckStack.concat(neighborsToCheck(cellObj));
+
+            while (toCheckStack.length > 0) {
+                var cell = toCheckStack.pop();
+
+                revealCells(Board.getCellElemFromObj(cell));
+            }
+        };
+
+
+        // Find neightbors that are not revealed yet
+        var neighborsToCheck = function(cell) {
+            var stack = new Array();
+            var neighbors = Board.getNeighbors(cell);
+
+            for (i in neighbors) {
+                var cell = neighbors[i];
+                if (!cell.reveal && !cell.inStack) {
+                    stack.push(cell);
+                    cell.inStack = true;
+                }
+            }
+
+            return stack;
+        };
+
+
+        var show = function() {
+            for (var i = 0; i < cellElems.length; i++) {
+                var cellObj = Board.getCellObjFromElem(cellElems[i]);
+
+                if (cellObj.isMine) {
+                    explode(cellElems[i]);
+                } else {
+                    cellElems[i].innerHTML = cellObj.mines;
+                }
+            }
+        };
+
+
+        var generateMines = function() {
+            for (var i = 0; i < getNumOfMines(); i++) {
+                var randX, randY;
+
+                do {
+                    randX = Math.floor(Math.random() * getWidth());
+                    randY = Math.floor(Math.random() * getHeight());
+
+                } while (cellIsMine(randX, randY));
+
+                putMine(randX, randY);
+                mines.push([randX, randY]);
+            }
+        };
+
+
+        var putMine = function(x, y) {
+            var cell = Board.getCell(x, y);
+            cell.isMine = true;
+            cell.mines = 1;
+
+            incrementNeighborMinesNum(cell);
+        };
+
+
+        var incrementNeighborMinesNum = function(cell) {
+            var neighbors = Board.getNeighbors(cell);
+
+            for (x in neighbors) {
+                neighbors[x].mines++;
+            }
+        };
+
+
+        var cellIsMine = function(x, y) {
+            return Board.getCell(x, y).isMine;
+        };
+
+
+        var getWidth = function() {
+            return difficulty.width;
+        };
+
+
+        var getHeight = function() {
+            return difficulty.height;
+        };
+
+
+        var getNumOfMines = function() {
+            return difficulty.numOfMines;
+        };
+
+
+
+        /*----------------------------------------------------
+        Board
+        -----------------------------------------------------*/
+        var Board = (function() {
+            var cellClassName = 'cell';
+
+            var init = function(w, h) {
+                container = document.getElementById('board');
+                width = w;
+                height = h;
+                cells = new Array(width);
+                createCells();
+                draw();
+                cellElems = document.getElementsByClassName(cellClassName);
+            };
+
+
+            var draw = function() {
+                for (var i = 0; i < width; i++) {
+                    // Create column container
+                    var col = document.createElement('div');
+                    col.className = 'col';
+                    container.appendChild(col);
+
+                    // Put cells in current column
+                    for (var j = 0; j < height; j++) {
+                        var cell = document.createElement('div');
+                        cell.className = cellClassName;
+                        cell.id = cellClassName + '-' + i + '-' + j;
+                        container.childNodes[i].appendChild(cell);
+                    }
+                }
+            };
+
+
+            var removeCells = function() {
+                while (container.hasChildNodes()) {
+                    container.removeChild(container.lastChild);
+                }
+            };
+
+
+            var getCell = function(x, y) {
+                return cells[x][y];
+            };
+
+
+            var createCells = function() {
+                // Create empty arrays
+                for (var i = 0; i < width; i++) {
+                    cells[i] = new Array(height);
+                }
+
+                // Fill each slot with a cell
+                for (var i = 0; i < cells.length; i++) {
+                    for (var j = 0; j < cells[i].length; j++) {
+                        cells[i][j] = new Cell(i, j);
+                    }
+                }
+            };
+
+
+            var getNeighbors = function(cell) {
+                var neighbors = new Array(),
+                    x = cell.x,
+                    y = cell.y,
+                    xs = [x - 1, x, x + 1],
+                    ys = [y - 1, y, y + 1];
+
+                for (var i in xs) {
+                    for (var j in ys) {
+                        // Put in neighbors array if not off the board
+                        if (xs[i] > -1 && xs[i] < width && ys[j] > -1 && ys[j] < height) {
+                            // Put in neighbors array if not current cell
+                            if (!(xs[i] == x && ys[j] == y)) {
+                                neighbors.push(getCell(xs[i], ys[j]));
+                            }
+                        }
+                    }
+                }
+
+                return neighbors;
+            };
+
+
+            var getCellElem = function(x, y) {
+                return document.getElementById(Board.cellId(x, y));
+            };
+
+
+            var getCellElemFromObj = function(cellObj) {
+                return document.getElementById(Board.cellId(cellObj.x, cellObj.y));
+            };
+
+
+            var getCellObjFromElem = function(cellElem) {
+                var idElems = cellElem.id.split('-');
+                var x = idElems[1];
+                var y = idElems[2];
+
+                return getCell(x, y);
+            };
+
+
+            var getCellElems = function() {
+                return cellElems;
+            };
+
+
+            var cellId = function(x, y) {
+                return 'cell-' + x + '-' + y;
+            };
+
+
+            return {
+                init: init,
+                getNeighbors: getNeighbors,
+                getCell: getCell,
+                getCellElem: getCellElem,
+                getCellObjFromElem: getCellObjFromElem,
+                getCellElemFromObj: getCellElemFromObj,
+                getCellElems: getCellElems,
+                cellId: cellId,
+                removeCells: removeCells,
+            }
+
+        })();
+
+        /*--------------------------------------------------
+        Cell
+        ---------------------------------------------------*/
+        var Cell = function(x, y) {
+            this.x = x;
+            this.y = y;
+            this.reveal = false;
+            this.flag = false;
+            this.mines = 0;
+            this.inStack = false;
+            this.isMine = false;
+
+            return this;
+        };
+
+
+        return {
+            initApp: initApp,
+        }
+    })();
+
+
+    Minesweeper.initApp();
+    </script>
+    <div id="result" class="col s12"></div>
+</body>
+
+</html>

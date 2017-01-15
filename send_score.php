@@ -7,6 +7,6 @@ if(mysqli_query($link,$query)){
 	$_SESSION['score']=$_POST['score'];
 	echo "Success";
 }else{
-	echo "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 分數傳送失敗\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+	echo "<p class=\"yellow-text text-darken-4 center-align\">分數傳送失敗</p>";
 }
 ?>

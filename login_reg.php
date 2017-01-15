@@ -4,9 +4,9 @@ session_start();
 if(isset($_POST['email'])){
 	$query="INSERT INTO `f74032146`.`user` (`username` ,`password` ,`email`) VALUES ('$_POST[username]', '$_POST[password]', '$_POST[email]');";
 	if(mysqli_query($link,$query)){
-		echo "<div class=\"notice success\"><i class=\"icon-ok icon-large\"></i> 註冊成功, ".$_POST['username']."\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+		echo "<p class=\"yellow-text text-darken-4 center-align\">註冊成功</p>";
 	}else{
-		echo "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 帳號已被使用\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+		echo "<p class=\"yellow-text text-darken-4 center-align\">帳號已被使用</p>";
 	}
 }else{
 	$query="SELECT * FROM `user` WHERE username=\"".$_POST['username']."\"";
@@ -17,7 +17,7 @@ if(isset($_POST['email'])){
 			$_SESSION['account']=$_POST['username'];
 			echo "Success";
 		}else{
-			echo "<div class=\"notice error\"><i class=\"icon-remove-sign icon-large\"></i> 帳號密碼錯誤\n<a href=\"#close\" class=\"icon-remove\"></a></div>";
+			echo "<p class=\"yellow-text text-darken-4 center-align\">帳號密碼錯誤</p>";
 		}
 	}
 }

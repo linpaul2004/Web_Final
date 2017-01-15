@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/kickstart.js"></script>
-    <link rel="stylesheet" href="css/kickstart.css" media="all" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>記分板</title>
 	<?php
 	include_once "config.php";
@@ -12,7 +12,9 @@
 	?>
 </head>
 <body>
-<table class="sortable">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<table class="highlight centered">
 <thead><tr>
 	<th>遊戲順序</th>
 	<th>遊戲</th>
