@@ -1,0 +1,465 @@
+<html>
+<head>
+  <title>2048</title>
+  <meta http-equiv="Content-type" content="text/html; charset=big5">
+
+</head>
+
+<body bgcolor="lightblue" onKeyPress="keyp(event)">
+	<div id="sc" style="position:absolute;top:0;left:0">
+		<label id="score" width="200px";>score: 0</label>
+	</div>
+	
+	<div id="gameover" style="position:absolute;top:0;left:0 display:hidden">
+		 <img id="gp" src="./picture/GAMEOVER.png">
+	</div>
+	
+	<div id="restart" style="position:absolute;top:0;left:0">
+		<button  id="restartB" width="200px" onclick="inif()";>restart</button>
+	</div>
+	<div>
+		<div id="c0" style="position:absolute;top:0;left:0">  
+		 <img id="l0" src="./picture/0.png">
+		</div>
+		<div id="c1" style="position:absolute;top:0;left:110;">  
+			<img id="l1" src="./picture/0.png">
+		</div>
+		<div id="c2" style="position:absolute;top:0;left:220;">  
+			<img id="l2" src="./picture/0.png">
+		</div>
+		<div id="c3" style="position:absolute;top:0;left:330;">  
+			<img id="l3" src="./picture/0.png">
+		</div>
+		<div id="c4" style="position:absolute;top:110;left:0;">  
+			<img id="l4" src="./picture/0.png">
+		</div>
+		<div id="c5" style="position:absolute;top:110;left:110;">  
+			<img id="l5" src="./picture/0.png">
+		</div>
+		<div id="c6" style="position:absolute;top:110;left:220;">  
+			<img id="l6" src="./picture/0.png">
+		</div>
+		<div id="c7" style="position:absolute;top:110;left:330;">		  
+			<img id="l7" src="./picture/0.png">
+		</div>		   
+		<div id="c8" style="position:absolute;top:220;left:0;">  
+			<img id="l8" src="./picture/0.png">
+		</div>
+		<div id="c9" style="position:absolute;top:220;left:110;">	  
+			<img id="l9" src="./picture/0.png">
+		</div>			 
+		<div id="c10" style="position:absolute;top:220;left:220;">  
+			<img id="l10" src="./picture/0.png">
+		</div>
+		<div id="c11" style="position:absolute;top:220;left:330;">  
+			<img id="l11" src="./picture/0.png">
+		</div>
+		<div id="c12" style="position:absolute;top:330;left:0;">	  
+			<img id="l12" src="./picture/0.png">
+		</div>			 
+		<div id="c13" style="position:absolute;top:330;left:110;">  
+			<img id="l13" src="./picture/0.png">
+		</div>
+		<div id="c14" style="position:absolute;top:330;left:220;">	  
+			<img id="l14" src="./picture/0.png">
+		</div>
+		<div id="c15" style="position:absolute;top:330;left:330;">		  
+			<img id="l15" src="./picture/0.png">
+		</div> 
+	</div>
+  <script language="javascript">
+    /* var x=parseInt(document.getElementById("c0").style.left);
+     var y=parseInt(document.getElementById("c0").style.top);
+	 var k=0;
+     moonMove();
+     function moonMove(){
+		k=k+1;
+        x= x-20; y= y-20;
+        if (x < 20) x= 500;
+        if (y < 20) y= 500;
+        document.getElementById("c0").style.left=x;
+        document.getElementById("c0").style.top=y;
+		if(k<20)
+        setTimeout("moonMove()",300);
+     }
+	 */
+	var na=new Array();
+	var score=0;     //  to memory the score;
+	var isbusy;
+	var isover;
+	var isfi;
+	var cellw=110;
+	var cellh=110;
+	var  hbace=120;
+	var  wbace=50;
+	for(var i=0;i<4;i++){
+		na[i]=new Array();
+		for(var j=0;j<4;j++){
+			na[i][j]=0;
+		}
+	}	
+	
+	inif();
+	
+	function inilab(){
+		for(var y=0;y<4;y++){
+			for(var x=0;x<4;x++){
+				document.getElementById("c"+(y*4+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*4+x)).style.top=y*cellh+hbace;
+				document.getElementById("l"+(y*4+x)).innerHTML ="";
+				document.getElementById("l"+(y*4+x)).style.backgroundColor  ="yellow";
+				document.getElementById("l"+(y*4+x)).src="./picture/0.png";
+				document.getElementById("restart").style.left=420;
+				document.getElementById("restart").style.top=20;
+				document.getElementById("restartB").style.fontSize=20;
+				document.getElementById("sc").style.top=20;
+				document.getElementById("sc").style.left=wbace;
+				document.getElementById("score").style.fontSize=20;
+				document.getElementById("gameover").style.display="none";
+				document.getElementById("gameover").style.left=20;
+				document.getElementById("gameover").style.top=170;
+				
+				//document.getElementById("gameover").size.height=500;
+				
+			//	document.getElementById("l"+(y*4+x)).style.height = "500";;
+			//	document.getElementById("l"+(y*4+x)).style.labelFontSize="150";
+			}
+		}
+	 }
+	
+	function initNumTable(){
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				na[i][j]=0;
+			}
+		}
+	}
+	
+	function inif(){
+		
+		inilab();
+		initNumTable();
+		newNum();
+		isbusy=0;
+		isover=0;
+	}
+		
+	function newNum(){
+		var dis;
+		var newNumber=Math.floor(Math.random()*4);
+		var e;
+		var row;
+		var col;
+		do
+		{
+			dis=Math.floor(Math.random()*16);
+			while(dis==16)dis=Math.floor(Math.random()*16);
+			row=Math.floor(dis/4);
+			col=dis%4;
+			if(na[col][row]==0)e=0;
+			else e=1;
+		}while(e==1);
+		if(newNumber>=3)newNumber=4;
+		else newNumber=2;
+		na[col][row]=newNumber;
+		newlab(col,row,newNumber);
+	
+	}
+
+	function scorechange(point){
+		
+		score=score+point;
+		document.getElementById("score").innerHTML="score: "+score;
+	}
+	
+	function checkGameOver(){
+			//alert("cg1");
+		isgameover();
+		//	alert("cg3");
+		if(isover==1){
+			//alert("cg4");
+			document.getElementById("gameover").style.display="middle";
+			alert("game over ");
+		}
+		
+	}
+	
+	function up(){
+	    var flag=0;
+		//alert("up");
+		for(var i=0;i<4;i++){
+			for(var j=0;j<3;j++){
+				if(na[j][i]!=0){
+					for(var k=1;k<4-j;k++){
+						if(na[j+k][i]!=0){
+							if(na[j+k][i]==na[j][i]){
+								na[j][i]+=na[j+k][i];
+								na[j+k][i]=0;
+								labcombine(j+k,i,j,i,na[j][i]);
+								flag++;
+								scorechange(na[j][i]);
+							}
+							break;
+						}
+					}
+				}
+				else{
+					for(var k=1;k<4-j;k++){
+						if(na[j+k][i]!=0){
+							na[j][i]=na[j+k][i];
+							na[j+k][i]=0;
+							movelab(j+k,i,j,i);
+							flag++;
+							j--;
+							break;
+						}
+
+					}
+				}
+			}
+		}
+        if(flag!=0)newNum();
+		else checkGameOver();
+	}
+	
+	function down(){
+		//alert("down");
+	    var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=3;j>0;j--){
+				if(na[j][i]!=0){
+					for(var k=1;k<=j;k++){
+						if(j==0)break;
+						if(na[j-k][i]!=0){
+							if(na[j-k][i]==na[j][i]){
+								na[j][i]+=na[j-k][i];
+								labcombine(j-k,i,j,i,na[j][i]);
+								na[j-k][i]=0;
+								flag++;
+								scorechange(na[j][i]);
+							}
+							break;
+						}
+					}
+				}
+				else{
+					for(var k=1;k<=j;k++){
+						if(na[j-k][i]!=0){
+							na[j][i]=na[j-k][i];
+							na[j-k][i]=0;
+                            movelab(j-k,i,j,i);
+                            flag++;
+                            j++;
+							break;
+						}
+					}
+				}
+			}
+		}
+        if(flag!=0)newNum();
+		else checkGameOver();
+	}
+	
+	function left(){
+		//alert("left");
+	    var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<3;j++){
+				if(na[i][j]!=0){
+					for(var k=1;k<4-j;k++){
+						if(na[i][j+k]!=0){
+							if(na[i][j+k]==na[i][j]){
+								na[i][j]+=na[i][j+k];
+								na[i][j+k]=0;
+								labcombine(i,j+k,i,j,na[i][j]);
+								flag++;
+								scorechange(na[i][j]);
+							}
+							break;
+						}
+					}
+				}
+				else{
+					for(var k=1;k<4-j;k++){
+						if(na[i][j+k]!=0){
+							na[i][j]=na[i][j+k];
+							na[i][j+k]=0;
+                            movelab(i,j+k,i,j);
+                            flag++;
+                            j--;
+							break;
+						}
+					}
+				}
+			}
+		}
+        if(flag!=0)newNum();
+		else checkGameOver();
+	}
+	
+	function right(){
+		//alert("right");
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=3;j>0;j--){
+				if(na[i][j]!=0){
+					for(var k=1;k<=j;k++){
+						if(na[i][j-k]!=0){
+							if(na[i][j-k]==na[i][j]){
+								na[i][j]+=na[i][j-k];
+								na[i][j-k]=0;
+								labcombine(i,j-k,i,j,na[i][j]);
+								flag++;
+								scorechange(na[i][j]);
+							}
+						}
+						break;
+					}
+				}
+				else{
+					for(var k=1;k<=j;k++){
+						if(na[i][j-k]!=0){
+							na[i][j]=na[i][j-k];
+							na[i][j-k]=0;
+                            movelab(i,j-k,i,j);
+                            flag++;
+                            j++;
+							break;
+						}
+					}
+				}
+			}
+		}
+        if(flag!=0) newNum();
+		else checkGameOver();
+	}	
+	
+	function isfill(){            // to know the block is fill or not
+	for(var i=0;i<4;i++){
+       for(var j=0;j<4;j++){
+           if(na[i][j]==0){
+				isfi=0;
+				return;
+		   }
+       }
+   }
+   isfi=1;
+}
+
+	function isgameover(){           //to know is gameover or not
+		//alert("ig1");
+		isfill();
+	if(isfi==0){
+		isover=0;
+		return;
+	}
+    var flag=0;
+    for(var i=0;i<4;i++){
+        for(var j=0;j<4;j++){
+            if(i!=0){
+                if(na[i][j]==na[i-1][j])
+                    flag=flag+1;
+					break;
+            }
+            if(i!=3){
+                if(na[i][j]==na[i+1][j])
+                    flag=flag+1;
+					break;
+            }
+            if(j!=0){
+                if(na[i][j]==na[i][j-1])
+                    flag=flag+1;
+					break;
+            }
+            if(j!=3){
+                if(na[i][j]==na[i][j+1])
+                    flag=flag+1;
+					break;
+            }
+        }
+    }
+	
+    if(flag==0)isover=1;
+    else  isover=0;
+	
+}	
+
+	function sleep( msec){       // use to  delay the time
+	var i=0;
+	var j=0;
+	for(i=0;i<100;i++){
+		for(j=0;j<100;j++)sleep2;
+	}
+}
+	function sleep2(){
+	alert("sleep2");
+	var i=0;
+	i=i+1;
+}
+	
+	function deletelab( y, x){
+		document.getElementById("c"+(y*4+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*4+x)).style.top=y*cellh+hbace;
+		//document.getElementById("l"+(y*4+x)).innerHTML="";
+		document.getElementById("l"+(y*4+x)).src="./picture/0.png";
+	}
+	
+	function newlab(y,x,num){
+		//alert("newlab :y="+y+" x="+x);
+		document.getElementById("c"+(y*4+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*4+x)).style.top=y*cellh+hbace;
+		//document.getElementById("l"+(y*4+x)).innerHTML=num;
+		document.getElementById("l"+(y*4+x)).src="./picture/"+num+".png";
+	}
+	
+	function movelab(yfrom,xfrom,ytarget,xtarget){
+		
+			var xgap=xtarget-xfrom;
+			var ygap=ytarget-yfrom;
+		for(var k=0;k<20;k++){
+			var s=(k*160)/20;
+			document.getElementById("c"+(yfrom*4+xfrom)).style.left=xfrom*160+xgap*s;
+			document.getElementById("c"+(yfrom*4+xfrom)).style.top=yfrom*160+ygap*s;
+			sleep(1000);
+		}
+		
+		deletelab(yfrom,xfrom);
+		
+		newlab(ytarget,xtarget,na[ytarget][xtarget]);
+		
+	}
+	
+	function labcombine(yfrom,xfrom, ytarget, xtarget,num){
+			var xgap=xtarget-xfrom;
+			var ygap=ytarget-yfrom;
+		for(var k=0;k<20;k++){
+			var s=(k*160)/20;
+			document.getElementById("c"+(yfrom*4+xfrom)).style.left=xfrom*160+xgap*s;
+			document.getElementById("c"+(yfrom*4+xfrom)).style.top=yfrom*160+ygap*s;
+			sleep(1000);
+		}
+		deletelab(yfrom,xfrom);
+		newlab(ytarget,xtarget,na[ytarget][xtarget]);
+	}
+	
+	function keyp(event){
+		if(isover==1)return;
+		if(isbusy==0){
+			isbusy=1;
+			if (event.keyCode==37)
+				left();
+			else if (event.keyCode==38)
+				up();
+			else if (event.keyCode==39)
+				right();
+			else if (event.keyCode==40)
+				down();
+			isbusy=0;
+			//alert ("end");
+		}
+		else alert("busy");
+	}	
+
+  </script>
+</body>
+</html>
