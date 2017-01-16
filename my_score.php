@@ -18,7 +18,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <nav>
         <div class="nav-wrapper">
-            <a href="./index.html" class="brand-logo right">網頁遊戲區</a>
+            <a href="./index.html" class="brand-logo right">你好，<?php echo($_SESSION['account']) ?></a>
             <ul class="left hide-on-med-and-down">
                 <li><a href="lobby.php">遊戲大廳</a></li>
                 <li class="active"><a href="my_score.php">我的分數</a></li>
@@ -61,7 +61,7 @@ if(isset($_POST['game']) && $_POST['game']!="overall"){
 		}
 	}
 }else{
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `time` ASC, `score` DESC";
+	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `score` DESC, `time` ASC";
 	$result=mysqli_query($link,$query);
 	if($result){
 		$rows=mysqli_fetch_array($result);
