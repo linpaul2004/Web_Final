@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>記分板</title>
     <?php
-	include_once "config.php";
-	session_start();
-	?>
+    include_once "config.php";
+    session_start();
+    ?>
 </head>
 
 <body>
@@ -28,13 +28,15 @@
         </div>
     </nav>
     計分表：
-    <select id="myselect" style="display: block;" onchange="show()">
-        <option value="overall">Overall</option>
-        <option value="minesweeper">踩地雷</option>
-        <option value="brick">打磚塊</option>
-        <option value="2048">2048</option>
-        <option value="english">英文測驗</option>
-    </select>
+    <div class="input-field col s12">
+        <select id="myselect" onchange="show()">
+            <option value="overall">Overall</option>
+            <option value="minesweeper">踩地雷</option>
+            <option value="brick">打磚塊</option>
+            <option value="2048">2048</option>
+            <option value="english">英文測驗</option>
+        </select>
+    </div>
     <table id="table" class="highlight centered">
         <thead>
             <tr>
@@ -48,35 +50,35 @@
             <?php
 $i=1;
 if(isset($_POST['game']) && $_POST['game']!="overall"){
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' AND `game`='$_POST[game]' ORDER BY `score` DESC, `time` ASC";
-	$result=mysqli_query($link,$query);
-	if($result){
-		$rows=mysqli_fetch_array($result);
-		while($rows){
-			echo "<tr>\n";
-			echo "\t<td>".$i."</td>\n";
-			echo "\t<td>".$rows[0]."</td>\n";
-			echo "\t<td>".$rows[1]."</td>\n";
-			echo "\t<td>".$rows[2]."</td>\n</tr>\n";
-			$i=$i+1;
-			$rows=mysqli_fetch_array($result);
-		}
-	}
+    $query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' AND `game`='$_POST[game]' ORDER BY `score` DESC, `time` ASC";
+    $result=mysqli_query($link,$query);
+    if($result){
+        $rows=mysqli_fetch_array($result);
+        while($rows){
+            echo "<tr>\n";
+            echo "\t<td>".$i."</td>\n";
+            echo "\t<td>".$rows[0]."</td>\n";
+            echo "\t<td>".$rows[1]."</td>\n";
+            echo "\t<td>".$rows[2]."</td>\n</tr>\n";
+            $i=$i+1;
+            $rows=mysqli_fetch_array($result);
+        }
+    }
 }else{
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `time` ASC, `score` DESC";
-	$result=mysqli_query($link,$query);
-	if($result){
-		$rows=mysqli_fetch_array($result);
-		while($rows){
-			echo "<tr>\n";
-			echo "\t<td>".$i."</td>\n";
-			echo "\t<td>".$rows[0]."</td>\n";
-			echo "\t<td>".$rows[1]."</td>\n";
-			echo "\t<td>".$rows[2]."</td>\n</tr>\n";
-			$i=$i+1;
-			$rows=mysqli_fetch_array($result);
-		}
-	}
+    $query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `time` ASC, `score` DESC";
+    $result=mysqli_query($link,$query);
+    if($result){
+        $rows=mysqli_fetch_array($result);
+        while($rows){
+            echo "<tr>\n";
+            echo "\t<td>".$i."</td>\n";
+            echo "\t<td>".$rows[0]."</td>\n";
+            echo "\t<td>".$rows[1]."</td>\n";
+            echo "\t<td>".$rows[2]."</td>\n</tr>\n";
+            $i=$i+1;
+            $rows=mysqli_fetch_array($result);
+        }
+    }
 }
 ?>
         </tbody>
@@ -99,6 +101,11 @@ if(isset($_POST['game']) && $_POST['game']!="overall"){
     }
     </script>
     <div id="result" class="col s12"></div>
+    <script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+    </script>
 </body>
 
 </html>
