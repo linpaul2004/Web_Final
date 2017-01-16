@@ -18,10 +18,11 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <nav>
         <div class="nav-wrapper">
-            <a href="./index.html" class="brand-logo center">你好，<?php echo($_SESSION['account']); ?></a>
+            <a href="#" class="brand-logo center">你好，<?php echo($_SESSION['account']); ?></a>
             <ul class="left hide-on-med-and-down">
                 <li class="active"><a href="lobby.php">遊戲大廳</a></li>
                 <li><a href="my_score.php">我的分數</a></li>
+                <li><a href="hot.php">熱門遊戲榜</a></li>
                 <li><a href="index.html">登出</a></li>
             </ul>
         </div>
@@ -42,7 +43,7 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="brick.html">開始玩</a>
+                    <a href="#" onclick="clicked('brick'); return false;">開始玩</a>
                 </div>
             </div>
         </div>
@@ -61,7 +62,7 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="minesweeper.html">開始玩</a>
+                    <a href="#" onclick="clicked('minesweeper'); return false;">開始玩</a>
                 </div>
             </div>
         </div>
@@ -80,7 +81,7 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="2048/2048.html">開始玩</a>
+                    <a href="#" onclick="clicked('2048'); return false;">開始玩</a>
                 </div>
             </div>
         </div>
@@ -99,7 +100,7 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="english.html">開始玩</a>
+                    <a href="#" onclick="clicked('english'); return false;">開始玩</a>
                 </div>
             </div>
         </div>
@@ -120,7 +121,7 @@
                     </p>
                 </div>
                 <div class="card-action">
-                    <a href="teris/teris.html">開始玩</a>
+                    <a href="#" onclick="clicked('tetris'); return false;">開始玩</a>
                 </div>
             </div>
         </div>
@@ -180,6 +181,24 @@
             oXHR.onreadystatechange = function() {
                 if (oXHR.readyState == 4 && oXHR.status == 200) {
                     window.location = "scoreboard.php";
+                }
+            }
+            oXHR.send(para);
+        }
+    }
+
+    function clicked(game) {
+        var oXHR = new XMLHttpRequest();
+        if (1) {
+            para = "game=" + game;
+            oXHR.open("POST", "click.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    if (oXHR.responseText != "Error") {
+                        console.log(oXHR.responseText);
+                        window.location = oXHR.responseText;
+                    }
                 }
             }
             oXHR.send(para);
