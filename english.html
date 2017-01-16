@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>English Test</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <div class="row" style="vertical-align: middle;">
+        <div class="col s12">
+            <p id="title" class="grey-text text-draken-4 center-align" style="font-size: 100%;">Question: 1/10 Time:10.0 Score: 0</p>
+            <button class="purple btn waves-effect waves-light center-align" onclick="restart()">重新開始</button>
+            <p id="q" class="brown-text text-darken-2 center-align" style="font-size: 300%;">選出同義字</p>
+        </div>
+        <div id="options">
+            <div class=" col s12 center-align" style="padding: 30px 0px 30px 0px;">
+                <button id="A" onclick="choose_A(0)" class="waves-effect btn waves-light" style="width: 300px;">
+                    <p style="margin: 0px 0px 0px 0px;">開始</p>
+                </button>
+            </div>
+            <div class="col s12 center-align" style="padding: 30px 0px 30px 0px;">
+                <button id="B" onclick="choose_A(1)" class="disabled waves-effect btn waves-light" style="width: 300px;">
+                    <p style="margin: 0px 0px 0px 0px;">B</p>
+                </button>
+            </div>
+            <div class="col s12 center-align" style="padding: 30px 0px 30px 0px;">
+                <button id="C" onclick="choose_A(2)" class="disabled waves-effect btn waves-light" style="width: 300px;">
+                    <p style="margin: 0px 0px 0px 0px;">C</p>
+                </button>
+            </div>
+            <div class="col s12 center-align" style="padding: 30px 0px 30px 0px;">
+                <button id="D" onclick="choose_A(3)" class="disabled waves-effect btn waves-light" style="width: 300px;">
+                    <p style="margin: 0px 0px 0px 0px;">D</p>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+    var time = 100;
+    var score = 0;
+    var q_num = 0;
+    var start = false;
+    var ca = document.getElementById("A");
+    var cb = document.getElementById("B");
+    var cc = document.getElementById("C");
+    var cd = document.getElementById("D");
+    var title = document.getElementById("title");
+    var q = document.getElementById("q");
+    var option = document.getElementById("options");
+    var now_q;
+    var question = [
+        "chagrin",
+        "shindig",
+        "tribulation",
+        "intrigue",
+        "scrupulous",
+        "demise",
+        "racous",
+        "apparent",
+        "premise",
+        "entreat",
+        "revoke",
+        "ludicrous",
+        "nuisance",
+        "petty",
+        "imperative",
+        "impugn",
+        "larceny",
+        "aplomb"
+    ];
+    var answer = [
+        "embarrassment",
+        "party",
+        "suffering",
+        "interest",
+        "honorable",
+        "death",
+        "rowdy",
+        "clear",
+        "assumption",
+        "plead",
+        "cancel",
+        "laughable",
+        "annoyance",
+        "trivial",
+        "essential",
+        "criticize",
+        "theft",
+        "confidence"
+    ];
+    var options = [
+        "satisfaction",
+        "amusement",
+        "surprise",
+        "curse",
+        "injury",
+        "surgery",
+        "vacation",
+        "vocation",
+        "profession",
+        "threaten",
+        "attach",
+        "mend",
+        "smart",
+        "careless",
+        "late",
+        "resident",
+        "evil",
+        "sport",
+        "impossible",
+        "covered",
+        "funny",
+        "dazzling",
+        "precise",
+        "reliable",
+        "pain",
+        "honesty",
+        "opinion",
+        "gift",
+        "joke",
+        "laugh",
+        "exaggerate",
+        "describe",
+        "praise",
+        "spotty",
+        "neat",
+        "enormous",
+        "hardy",
+        "luxurious",
+        "teeny",
+        "candle",
+        "muscle",
+        "duty",
+        "shamful",
+        "insulting",
+        "believable",
+        "employ",
+        "convert",
+        "nod",
+        "give",
+        "spoil",
+        "feed",
+        "shame",
+        "dream",
+        "rumor"
+    ];
+    var used = [];
+    var timer;
+
+    function restart() {
+        start = false;
+        clearInterval(timer);
+        q.innerHTML = "選出同義字";
+        option.getElementsByTagName("p")[0].innerHTML = "開始";
+        q_num = 0;
+        score = 0;
+        time = 100;
+        ca.classList.toggle("btn-flat");
+        ca.classList.toggle("btn");
+        cb.classList.toggle("btn-flat");
+        cb.classList.toggle("btn");
+        cc.classList.toggle("btn-flat");
+        cc.classList.toggle("btn");
+        cd.classList.toggle("btn-flat");
+        cd.classList.toggle("btn");
+        cb.classList.toggle("disabled");
+        cc.classList.toggle("disabled");
+        cd.classList.toggle("disabled");
+    }
+
+    function choose_A(choice) {
+        if (start == false) {
+            start = true;
+            startGame();
+        } else {
+            if (option.getElementsByTagName("p")[choice].innerHTML == answer[now_q]) {
+                clearInterval(timer);
+                option.getElementsByTagName("button")[choice].classList.toggle("btn");
+                option.getElementsByTagName("button")[choice].classList.toggle("btn-flat");
+                time = 100;
+                score += time;
+                setTimeout(function() {
+                    option.getElementsByTagName("button")[choice].classList.toggle("btn");
+                    option.getElementsByTagName("button")[choice].classList.toggle("btn-flat");
+                    timer = setInterval(updateTime, 100);
+                    next_question();
+                }, 500);
+            } else {
+                clearInterval(timer);
+                option.getElementsByTagName("button")[choice].classList.toggle("btn");
+                option.getElementsByTagName("button")[choice].classList.toggle("btn-flat");
+                option.getElementsByTagName("button")[choice].classList.toggle("red");
+                time = 100;
+                setTimeout(function() {
+                    option.getElementsByTagName("button")[choice].classList.toggle("btn");
+                    option.getElementsByTagName("button")[choice].classList.toggle("btn-flat");
+                    option.getElementsByTagName("button")[choice].classList.toggle("red");
+                    timer = setInterval(updateTime, 100);
+                    next_question();
+                }, 500);
+            }
+        }
+    }
+
+    function startGame() {
+        ca.classList.toggle("btn-flat");
+        ca.classList.toggle("btn");
+        cb.classList.toggle("btn-flat");
+        cb.classList.toggle("btn");
+        cc.classList.toggle("btn-flat");
+        cc.classList.toggle("btn");
+        cd.classList.toggle("btn-flat");
+        cd.classList.toggle("btn");
+        cb.classList.toggle("disabled");
+        cc.classList.toggle("disabled");
+        cd.classList.toggle("disabled");
+        timer = setInterval(updateTime, 100);
+        for (i = 0; i < question.length; i++) {
+            used[i] = false;
+        }
+        next_question();
+    }
+
+    function sendScore() {
+        var oXHR = new XMLHttpRequest();
+        var username = "<?php echo($_SESSION['account']) ?>"
+        if (username) {
+            para = "game=english" + "&score=" + score;
+            oXHR.open("POST", "send_score.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    if (oXHR.responseText == "Success") {
+                        window.location = "scoreboard.php";
+                    } else {
+                        document.getElementById("result").innerHTML = oXHR.responseText;
+                    }
+                }
+            }
+            oXHR.send(para);
+        } else {
+            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">尚未登入</p>";
+        }
+    };
+
+    function next_question() {
+        if (q_num >= 10) {
+            sendScore();
+            alert("Game Over");
+            return;
+        }
+        q_num++;
+        var tmp;
+        now_q = Math.floor(Math.random() * question.length);
+        while (used[now_q]) {
+            now_q = Math.floor(Math.random() * question.length);
+        }
+        used[now_q] = true;
+        q.innerHTML = question[now_q];
+        var bool = [false, false, false, false];
+        for (i = 0; i < 4; i++) {
+            tmp = Math.floor(Math.random() * 4);
+            if (bool[tmp]) {
+                i--;
+                continue;
+            } else {
+                bool[tmp] = true;
+            }
+            if (tmp) {
+                option.getElementsByTagName("p")[i].innerHTML = options[Math.floor(Math.random() * options.length)];
+            } else {
+                option.getElementsByTagName("p")[i].innerHTML = answer[now_q];
+            }
+        }
+    }
+
+    function updateTime() {
+        if (--time >= 0) {
+            title.innerHTML = "Question: " + q_num + "/10" + " Time: " + time / 10.0 + " Score: " + score;
+        } else {
+            clearInterval(timer);
+            option.getElementsByTagName("button")[0].classList.toggle("btn");
+            option.getElementsByTagName("button")[0].classList.toggle("btn-flat");
+            option.getElementsByTagName("button")[0].classList.toggle("red");
+            option.getElementsByTagName("button")[1].classList.toggle("btn");
+            option.getElementsByTagName("button")[1].classList.toggle("btn-flat");
+            option.getElementsByTagName("button")[1].classList.toggle("red");
+            option.getElementsByTagName("button")[2].classList.toggle("btn");
+            option.getElementsByTagName("button")[2].classList.toggle("btn-flat");
+            option.getElementsByTagName("button")[2].classList.toggle("red");
+            option.getElementsByTagName("button")[3].classList.toggle("btn");
+            option.getElementsByTagName("button")[3].classList.toggle("btn-flat");
+            option.getElementsByTagName("button")[3].classList.toggle("red");
+            time = 100;
+            setTimeout(function() {
+                option.getElementsByTagName("button")[0].classList.toggle("btn");
+                option.getElementsByTagName("button")[0].classList.toggle("btn-flat");
+                option.getElementsByTagName("button")[0].classList.toggle("red");
+                option.getElementsByTagName("button")[1].classList.toggle("btn");
+                option.getElementsByTagName("button")[1].classList.toggle("btn-flat");
+                option.getElementsByTagName("button")[1].classList.toggle("red");
+                option.getElementsByTagName("button")[2].classList.toggle("btn");
+                option.getElementsByTagName("button")[2].classList.toggle("btn-flat");
+                option.getElementsByTagName("button")[2].classList.toggle("red");
+                option.getElementsByTagName("button")[3].classList.toggle("btn");
+                option.getElementsByTagName("button")[3].classList.toggle("btn-flat");
+                option.getElementsByTagName("button")[3].classList.toggle("red");
+                timer = setInterval(updateTime, 100);
+                next_question();
+            }, 500);
+        }
+    }
+    </script>
+    <div id="result"></div>
+</body>
+
+</html>

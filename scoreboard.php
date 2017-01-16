@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>記分板</title>
-	<?php
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>記分板</title>
+    <?php
 	include_once "config.php";
 	session_start();
+	if(isset($_POST['game'])){
+		$_SESSION['game']=$_POST['game'];
+		unset($_SESSION['score']);
+	}
 	?>
 </head>
+
 <body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
-<table class="highlight centered">
-<?php
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <table class="highlight centered">
+        <?php
 if(isset($_SESSION['score'])){
 ?>
-<b>您的分數：
+            <b>您的分數：
 <?php
 echo($_SESSION['score']);
 ?>
 </b>
-<?php
+            <?php
 }
 ?>
-<thead><tr>
-	<th>名次</th>
-	<th>用戶名稱</th>
-	<th>分數</th>
-	<th>時間</th>
-</tr></thead>
-<tbody>
-<?php
+                <thead>
+                    <tr>
+                        <th>名次</th>
+                        <th>用戶名稱</th>
+                        <th>分數</th>
+                        <th>時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 $i=1;
 $query="SELECT `username`, `score`, `time` FROM `score` WHERE `game`='$_SESSION[game]' ORDER BY `score` DESC, `time` ASC";
 $result=mysqli_query($link,$query);
@@ -50,7 +58,8 @@ if($result){
 	}
 }
 ?>
-</tbody>
-</table>
+                </tbody>
+    </table>
+    <a class="btn waves-light-3 waves-effect blue" href="lobby.php">回到大廳</button>
 </body>
 </html>

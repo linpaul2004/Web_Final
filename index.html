@@ -19,7 +19,7 @@
             oXHR.onreadystatechange = function() {
                 if (oXHR.readyState == 4 && oXHR.status == 200) {
                     if (oXHR.responseText == "Success") {
-                        window.location = "lobby.html";
+                        window.location = "lobby.php";
                     } else {
                         document.getElementById("result").innerHTML = oXHR.responseText;
                     }

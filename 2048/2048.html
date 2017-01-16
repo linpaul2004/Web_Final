@@ -72,20 +72,20 @@
     </div>
     <script language="javascript">
     /* var x=parseInt(document.getElementById("c0").style.left);
-                                 var y=parseInt(document.getElementById("c0").style.top);
-                                 var k=0;
-                                 moonMove();
-                                 function moonMove(){
-                                    k=k+1;
-                                    x= x-20; y= y-20;
-                                    if (x < 20) x= 500;
-                                    if (y < 20) y= 500;
-                                    document.getElementById("c0").style.left=x;
-                                    document.getElementById("c0").style.top=y;
-                                    if(k<20)
-                                    setTimeout("moonMove()",300);
-                                 }
-                                 */
+                                         var y=parseInt(document.getElementById("c0").style.top);
+                                         var k=0;
+                                         moonMove();
+                                         function moonMove(){
+                                            k=k+1;
+                                            x= x-20; y= y-20;
+                                            if (x < 20) x= 500;
+                                            if (y < 20) y= 500;
+                                            document.getElementById("c0").style.left=x;
+                                            document.getElementById("c0").style.top=y;
+                                            if(k<20)
+                                            setTimeout("moonMove()",300);
+                                         }
+                                         */
     var na = new Array();
     var score = 0; //  to memory the score;
     var isbusy;
@@ -139,7 +139,7 @@
     }
 
     function inif() {
-
+        score = 0;
         inilab();
         initNumTable();
         newNum();
@@ -482,7 +482,7 @@
         } else alert("busy");
     }
     </script>
-    <div id="result"></div>
+    <div id="result" class="col s12"></div>
 </body>
 
 </html>
