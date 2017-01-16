@@ -13,7 +13,7 @@ if(isset($_POST['game']) && $_POST['game']!="overall"){
     </thead>
     <tbody>
         <?php
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `score` DESC, `time` ASC";
+	$query="SELECT `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `score` DESC, `time` ASC";
 	$result=mysqli_query($link,$query);
 	if($result){
 		$rows=mysqli_fetch_array($result);

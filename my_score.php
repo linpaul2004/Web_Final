@@ -18,10 +18,11 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <nav>
         <div class="nav-wrapper">
-            <a href="./index.html" class="brand-logo right">你好，<?php echo($_SESSION['account']) ?></a>
+            <a href="./index.html" class="brand-logo center">你好，<?php echo($_SESSION['account']) ?></a>
             <ul class="left hide-on-med-and-down">
                 <li><a href="lobby.php">遊戲大廳</a></li>
                 <li class="active"><a href="my_score.php">我的分數</a></li>
+                <li><a href="index.html">登出</a></li>
             </ul>
         </div>
     </nav>

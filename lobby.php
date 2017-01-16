@@ -22,6 +22,7 @@
             <ul class="left hide-on-med-and-down">
                 <li class="active"><a href="lobby.php">遊戲大廳</a></li>
                 <li><a href="my_score.php">我的分數</a></li>
+                <li><a href="index.html">登出</a></li>
             </ul>
         </div>
     </nav>
