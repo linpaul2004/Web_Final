@@ -28,6 +28,19 @@
         </div>
     </nav>
     <div class="row">
+        <div class="col s12">
+            搜尋遊戲：
+            <div class="input-field inline">
+                <input id="search_string" type="text" onkeypress="click_search(event)">
+                <label for="search_string">搜尋字串</label>
+            </div>
+            <button type="button" class="lime btn waves-effect waves-light" onclick="search()"><i class="material-icons center">search</i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div id="sr" class="col s12"></div>
+    </div>
+    <div class="row">
         <div class="col s3">
             <div class="card medium sticky-action">
                 <div class="card-image waves-effect waves-block waves-light">
@@ -196,12 +209,40 @@
             oXHR.onreadystatechange = function() {
                 if (oXHR.readyState == 4 && oXHR.status == 200) {
                     if (oXHR.responseText != "Error") {
-                        console.log(oXHR.responseText);
+                        //console.log(oXHR.responseText);
                         window.location = oXHR.responseText;
                     }
                 }
             }
             oXHR.send(para);
+        }
+    }
+
+    function click_search(e) {
+        if (e.keyCode === 13) {
+            search();
+        } else {
+            document.getElementById("sr").innerHTML = "";
+        }
+    }
+
+    function search() {
+        var oXHR = new XMLHttpRequest();
+        var string = document.getElementById("search_string").value;
+        if (string) {
+            para = "string=" + encodeURIComponent(document.getElementById("search_string").value);
+            oXHR.open("POST", "search.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    if (oXHR.responseText != "Error") {
+                        document.getElementById("sr").innerHTML = oXHR.responseText;
+                    }
+                }
+            }
+            oXHR.send(para);
+        } else {
+            document.getElementById("sr").innerHTML = "";
         }
     }
     </script>
