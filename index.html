@@ -27,7 +27,7 @@
             }
             oXHR.send(para);
         } else {
-            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">欄位不得為空</p>";
+            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\" style=\"font-weight: bold;\">欄位不得為空</p>";
         }
     }
 
@@ -38,12 +38,31 @@
         password2 = document.getElementById("pw3").value;
         email = document.getElementById("em").value;
         if (password != password2) {
-            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">密碼不一致</p>";
+            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\" style=\"font-weight: bold;\">密碼不一致</p>";
             return;
         }
         if (account && password && email && password2) {
             para = "username=" + account + "&password=" + password + "&email=" + email;
             oXHR.open("POST", "login_reg.php", true);
+            oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oXHR.onreadystatechange = function() {
+                if (oXHR.readyState == 4 && oXHR.status == 200) {
+                    document.getElementById("result").innerHTML = oXHR.responseText;
+                }
+            }
+            oXHR.send(para);
+        } else {
+            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\" style=\"font-weight: bold;\">欄位不得為空</p>";
+        }
+    }
+
+    function forgot() {
+        var oXHR = new XMLHttpRequest();
+        account = document.getElementById("acc3").value;
+        email = document.getElementById("em2").value;
+        if (account && email) {
+            para = "username=" + account + "&email=" + email;
+            oXHR.open("POST", "forgot.php", true);
             oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             oXHR.onreadystatechange = function() {
                 if (oXHR.readyState == 4 && oXHR.status == 200) {
@@ -65,6 +84,7 @@
     <ul class="tabs">
         <li class="tab"><a href="#login">登入</a></li>
         <li class="tab"><a href="#reg">註冊</a></li>
+        <li class="tab"><a href="#forgot">忘記密碼</a></li>
     </ul>
     <div id="login" class="col s12">
         <form>
@@ -106,7 +126,22 @@
             <button type="button" class="btn waves-effect waves-light" onclick="register()">註冊</button>
         </form>
     </div>
-    <div id="result" class="col s12"></div>
+    <div id="forgot" class="col s12">
+        <form>
+            <div class="input-field col s12">
+                <label for="acc3">帳號</label>
+                <input id="acc3" type="text" class="validate">
+            </div>
+            <br>
+            <div class="input-field col s12">
+                <label for="em2">電子郵件</label>
+                <input id="em2" type="text" class="validate">
+            </div>
+            <br>
+            <button type="button" class="btn waves-effect waves-light" onclick="forgot()">查詢密碼</button>
+        </form>
+    </div>
+    <div id="result" class="col s12" style="background-color: aqua;"></div>
 </body>
 
 </html>
