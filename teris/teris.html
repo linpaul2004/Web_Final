@@ -1,0 +1,1029 @@
+<html>
+<head>
+  <title>teteris</title>
+  <meta http-equiv="Content-type" content="text/html; charset=big5">
+
+</head>
+
+<body bgcolor="lightblue" onKeyPress="keyp(event)">
+	<div id="sc" style="position:absolute;top:0;left:0">
+		<label id="score" width="200px";>score: 0</label>
+	</div>
+	
+	<div id="gameover" style="position:absolute;top:0;left:0 display:hidden">
+		 <img id="gp" src="./picture/GAMEOVER.png">
+	</div>
+	
+	<div id="restart" style="position:absolute;top:0;left:0">
+		<button  id="restartB" width="200px" onclick="inif()";>restart</button>
+	</div>
+	<div>
+		<div id="c0" style="position:absolute;top:0;left:0">  
+		 <img id="l0" src="./picture/0.png">
+		</div>
+		<div id="c1" style="position:absolute;top:0;left:110;">  
+			<img id="l1" src="./picture/0.png">
+		</div>
+		<div id="c2" style="position:absolute;top:0;left:220;">  
+			<img id="l2" src="./picture/0.png">
+		</div>
+		<div id="c3" style="position:absolute;top:0;left:330;">  
+			<img id="l3" src="./picture/0.png">
+		</div>
+		<div id="c4" style="position:absolute;top:110;left:0;">  
+			<img id="l4" src="./picture/0.png">
+		</div>
+		<div id="c5" style="position:absolute;top:110;left:110;">  
+			<img id="l5" src="./picture/0.png">
+		</div>
+		<div id="c6" style="position:absolute;top:110;left:220;">  
+			<img id="l6" src="./picture/0.png">
+		</div>
+		<div id="c7" style="position:absolute;top:110;left:330;">		  
+			<img id="l7" src="./picture/0.png">
+		</div>		   
+		<div id="c8" style="position:absolute;top:220;left:0;">  
+			<img id="l8" src="./picture/0.png">
+		</div>
+		<div id="c9" style="position:absolute;top:220;left:110;">	  
+			<img id="l9" src="./picture/0.png">
+		</div>			 
+		<div id="c10" style="position:absolute;top:220;left:220;">  
+			<img id="l10" src="./picture/0.png">
+		</div>
+		<div id="c11" style="position:absolute;top:220;left:330;">  
+			<img id="l11" src="./picture/0.png">
+		</div>
+		<div id="c12" style="position:absolute;top:330;left:0;">	  
+			<img id="l12" src="./picture/0.png">
+		</div>			 
+		<div id="c13" style="position:absolute;top:330;left:110;">  
+			<img id="l13" src="./picture/0.png">
+		</div>
+		<div id="c14" style="position:absolute;top:330;left:220;">	  
+			<img id="l14" src="./picture/0.png">
+		</div>
+		<div id="c15" style="position:absolute;top:330;left:330;">		  
+			<img id="l15" src="./picture/0.png">
+		</div> 
+		<div id="c16" style="position:absolute;top:110;left:220;">  
+			<img id="l16" src="./picture/0.png">
+		</div>
+		<div id="c17" style="position:absolute;top:110;left:330;">		  
+			<img id="l17" src="./picture/0.png">
+		</div>		   
+		<div id="c18" style="position:absolute;top:220;left:0;">  
+			<img id="l18" src="./picture/0.png">
+		</div>
+		<div id="c19" style="position:absolute;top:220;left:110;">	  
+			<img id="l19" src="./picture/0.png">
+		</div>	
+		<div id="c20" style="position:absolute;top:0;left:0">  
+		 <img id="l20" src="./picture/0.png">
+		</div>
+		<div id="c21" style="position:absolute;top:0;left:110;">  
+			<img id="l21" src="./picture/0.png">
+		</div>
+		<div id="c22" style="position:absolute;top:0;left:220;">  
+			<img id="l22" src="./picture/0.png">
+		</div>
+		<div id="c23" style="position:absolute;top:0;left:330;">  
+			<img id="l23" src="./picture/0.png">
+		</div>
+		<div id="c24" style="position:absolute;top:110;left:0;">  
+			<img id="l24" src="./picture/0.png">
+		</div>
+		<div id="c25" style="position:absolute;top:110;left:110;">  
+			<img id="l25" src="./picture/0.png">
+		</div>
+		<div id="c26" style="position:absolute;top:110;left:220;">  
+			<img id="l26" src="./picture/0.png">
+		</div>
+		<div id="c27" style="position:absolute;top:110;left:330;">		  
+			<img id="l27" src="./picture/0.png">
+		</div>		   
+		<div id="c28" style="position:absolute;top:220;left:0;">  
+			<img id="l28" src="./picture/0.png">
+		</div>
+		<div id="c29" style="position:absolute;top:220;left:110;">	  
+			<img id="l29" src="./picture/0.png">
+		</div>			 
+		<div id="c30" style="position:absolute;top:0;left:0">  
+		 <img id="l30" src="./picture/0.png">
+		</div>
+		<div id="c31" style="position:absolute;top:0;left:110;">  
+			<img id="l31" src="./picture/0.png">
+		</div>
+		<div id="c32" style="position:absolute;top:0;left:220;">  
+			<img id="l32" src="./picture/0.png">
+		</div>
+		<div id="c33" style="position:absolute;top:0;left:330;">  
+			<img id="l33" src="./picture/0.png">
+		</div>
+		<div id="c34" style="position:absolute;top:110;left:0;">  
+			<img id="l34" src="./picture/0.png">
+		</div>
+		<div id="c35" style="position:absolute;top:110;left:110;">  
+			<img id="l35" src="./picture/0.png">
+		</div>
+		<div id="c36" style="position:absolute;top:110;left:220;">  
+			<img id="l36" src="./picture/0.png">
+		</div>
+		<div id="c37" style="position:absolute;top:110;left:330;">		  
+			<img id="l37" src="./picture/0.png">
+		</div>		   
+		<div id="c38" style="position:absolute;top:220;left:0;">  
+			<img id="l38" src="./picture/0.png">
+		</div>
+		<div id="c39" style="position:absolute;top:220;left:110;">	  
+			<img id="l39" src="./picture/0.png">
+		</div>			 
+		<div id="c40" style="position:absolute;top:0;left:0">  
+		 <img id="l40" src="./picture/0.png">
+		</div>
+		<div id="c41" style="position:absolute;top:0;left:110;">  
+			<img id="l41" src="./picture/0.png">
+		</div>
+		<div id="c42" style="position:absolute;top:0;left:220;">  
+			<img id="l42" src="./picture/0.png">
+		</div>
+		<div id="c43" style="position:absolute;top:0;left:330;">  
+			<img id="l43" src="./picture/0.png">
+		</div>
+		<div id="c44" style="position:absolute;top:110;left:0;">  
+			<img id="l44" src="./picture/0.png">
+		</div>
+		<div id="c45" style="position:absolute;top:110;left:110;">  
+			<img id="l45" src="./picture/0.png">
+		</div>
+		<div id="c46" style="position:absolute;top:110;left:220;">  
+			<img id="l46" src="./picture/0.png">
+		</div>
+		<div id="c47" style="position:absolute;top:110;left:330;">		  
+			<img id="l47" src="./picture/0.png">
+		</div>		   
+		<div id="c48" style="position:absolute;top:220;left:0;">  
+			<img id="l48" src="./picture/0.png">
+		</div>
+		<div id="c49" style="position:absolute;top:220;left:110;">	  
+			<img id="l49" src="./picture/0.png">
+		</div>			 
+		<div id="c50" style="position:absolute;top:0;left:0">  
+		 <img id="l50" src="./picture/0.png">
+		</div>
+		<div id="c51" style="position:absolute;top:0;left:110;">  
+			<img id="l51" src="./picture/0.png">
+		</div>
+		<div id="c52" style="position:absolute;top:0;left:220;">  
+			<img id="l52" src="./picture/0.png">
+		</div>
+		<div id="c53" style="position:absolute;top:0;left:330;">  
+			<img id="l53" src="./picture/0.png">
+		</div>
+		<div id="c54" style="position:absolute;top:110;left:0;">  
+			<img id="l54" src="./picture/0.png">
+		</div>
+		<div id="c55" style="position:absolute;top:110;left:110;">  
+			<img id="l55" src="./picture/0.png">
+		</div>
+		<div id="c56" style="position:absolute;top:110;left:220;">  
+			<img id="l56" src="./picture/0.png">
+		</div>
+		<div id="c57" style="position:absolute;top:110;left:330;">		  
+			<img id="l57" src="./picture/0.png">
+		</div>		   
+		<div id="c58" style="position:absolute;top:220;left:0;">  
+			<img id="l58" src="./picture/0.png">
+		</div>
+		<div id="c59" style="position:absolute;top:220;left:110;">	  
+			<img id="l59" src="./picture/0.png">
+		</div>			 
+		<div id="c60" style="position:absolute;top:0;left:0">  
+		 <img id="l60" src="./picture/0.png">
+		</div>
+		<div id="c61" style="position:absolute;top:0;left:110;">  
+			<img id="l61" src="./picture/0.png">
+		</div>
+		<div id="c62" style="position:absolute;top:0;left:220;">  
+			<img id="l62" src="./picture/0.png">
+		</div>
+		<div id="c63" style="position:absolute;top:0;left:330;">  
+			<img id="l63" src="./picture/0.png">
+		</div>
+		<div id="c64" style="position:absolute;top:110;left:0;">  
+			<img id="l64" src="./picture/0.png">
+		</div>
+		<div id="c65" style="position:absolute;top:110;left:110;">  
+			<img id="l65" src="./picture/0.png">
+		</div>
+		<div id="c66" style="position:absolute;top:110;left:220;">  
+			<img id="l66" src="./picture/0.png">
+		</div>
+		<div id="c67" style="position:absolute;top:110;left:330;">		  
+			<img id="l67" src="./picture/0.png">
+		</div>		   
+		<div id="c68" style="position:absolute;top:220;left:0;">  
+			<img id="l68" src="./picture/0.png">
+		</div>
+		<div id="c69" style="position:absolute;top:220;left:110;">	  
+			<img id="l69" src="./picture/0.png">
+		</div>			 
+		<div id="c70" style="position:absolute;top:0;left:0">  
+		 <img id="l70" src="./picture/0.png">
+		</div>
+		<div id="c71" style="position:absolute;top:0;left:110;">  
+			<img id="l71" src="./picture/0.png">
+		</div>
+		<div id="c72" style="position:absolute;top:0;left:220;">  
+			<img id="l72" src="./picture/0.png">
+		</div>
+		<div id="c73" style="position:absolute;top:0;left:330;">  
+			<img id="l73" src="./picture/0.png">
+		</div>
+		<div id="c74" style="position:absolute;top:110;left:0;">  
+			<img id="l74" src="./picture/0.png">
+		</div>
+		<div id="c75" style="position:absolute;top:110;left:110;">  
+			<img id="l75" src="./picture/0.png">
+		</div>
+		<div id="c76" style="position:absolute;top:110;left:220;">  
+			<img id="l76" src="./picture/0.png">
+		</div>
+		<div id="c77" style="position:absolute;top:110;left:330;">		  
+			<img id="l77" src="./picture/0.png">
+		</div>		   
+		<div id="c78" style="position:absolute;top:220;left:0;">  
+			<img id="l78" src="./picture/0.png">
+		</div>
+		<div id="c79" style="position:absolute;top:220;left:110;">	  
+			<img id="l79" src="./picture/0.png">
+		</div>			 
+		<div id="c80" style="position:absolute;top:0;left:0">  
+		 <img id="l80" src="./picture/0.png">
+		</div>
+		<div id="c81" style="position:absolute;top:0;left:110;">  
+			<img id="l81" src="./picture/0.png">
+		</div>
+		<div id="c82" style="position:absolute;top:0;left:220;">  
+			<img id="l82" src="./picture/0.png">
+		</div>
+		<div id="c83" style="position:absolute;top:0;left:330;">  
+			<img id="l83" src="./picture/0.png">
+		</div>
+		<div id="c84" style="position:absolute;top:110;left:0;">  
+			<img id="l84" src="./picture/0.png">
+		</div>
+		<div id="c85" style="position:absolute;top:110;left:110;">  
+			<img id="l85" src="./picture/0.png">
+		</div>
+		<div id="c86" style="position:absolute;top:110;left:220;">  
+			<img id="l86" src="./picture/0.png">
+		</div>
+		<div id="c87" style="position:absolute;top:110;left:330;">		  
+			<img id="l87" src="./picture/0.png">
+		</div>		   
+		<div id="c88" style="position:absolute;top:220;left:0;">  
+			<img id="l88" src="./picture/0.png">
+		</div>
+		<div id="c89" style="position:absolute;top:220;left:110;">	  
+			<img id="l89" src="./picture/0.png">
+		</div>			 
+		<div id="c90" style="position:absolute;top:0;left:0">  
+		 <img id="l90" src="./picture/0.png">
+		</div>
+		<div id="c91" style="position:absolute;top:0;left:110;">  
+			<img id="l91" src="./picture/0.png">
+		</div>
+		<div id="c92" style="position:absolute;top:0;left:220;">  
+			<img id="l92" src="./picture/0.png">
+		</div>
+		<div id="c93" style="position:absolute;top:0;left:330;">  
+			<img id="l93" src="./picture/0.png">
+		</div>
+		<div id="c94" style="position:absolute;top:110;left:0;">  
+			<img id="l94" src="./picture/0.png">
+		</div>
+		<div id="c95" style="position:absolute;top:110;left:110;">  
+			<img id="l95" src="./picture/0.png">
+		</div>
+		<div id="c96" style="position:absolute;top:110;left:220;">  
+			<img id="l96" src="./picture/0.png">
+		</div>
+		<div id="c97" style="position:absolute;top:110;left:330;">		  
+			<img id="l97" src="./picture/0.png">
+		</div>		   
+		<div id="c98" style="position:absolute;top:220;left:0;">  
+			<img id="l98" src="./picture/0.png">
+		</div>
+		<div id="c99" style="position:absolute;top:220;left:110;">	  
+			<img id="l99" src="./picture/0.png">
+		</div>	
+		
+		<div id="c100" style="position:absolute;top:0;left:0">  
+		 <img id="l100" src="./picture/0.png">
+		</div>
+		<div id="c101" style="position:absolute;top:0;left:110;">  
+			<img id="l101" src="./picture/0.png">
+		</div>
+		<div id="c102" style="position:absolute;top:0;left:220;">  
+			<img id="l102" src="./picture/0.png">
+		</div>
+		<div id="c103" style="position:absolute;top:0;left:330;">  
+			<img id="l103" src="./picture/0.png">
+		</div>
+		<div id="c104" style="position:absolute;top:110;left:0;">  
+			<img id="l104" src="./picture/0.png">
+		</div>
+		<div id="c105" style="position:absolute;top:110;left:110;">  
+			<img id="l105" src="./picture/0.png">
+		</div>
+		<div id="c106" style="position:absolute;top:110;left:220;">  
+			<img id="l106" src="./picture/0.png">
+		</div>
+		<div id="c107" style="position:absolute;top:110;left:330;">		  
+			<img id="l107" src="./picture/0.png">
+		</div>		   
+		<div id="c108" style="position:absolute;top:220;left:0;">  
+			<img id="l108" src="./picture/0.png">
+		</div>
+		<div id="c109" style="position:absolute;top:220;left:110;">	  
+			<img id="l109" src="./picture/0.png">
+		</div>			 
+		<div id="c110" style="position:absolute;top:220;left:220;">  
+			<img id="l110" src="./picture/0.png">
+		</div>
+		<div id="c111" style="position:absolute;top:220;left:330;">  
+			<img id="l111" src="./picture/0.png">
+		</div>
+		<div id="c112" style="position:absolute;top:330;left:0;">	  
+			<img id="l112" src="./picture/0.png">
+		</div>			 
+		<div id="c113" style="position:absolute;top:330;left:110;">  
+			<img id="l113" src="./picture/0.png">
+		</div>
+		<div id="c114" style="position:absolute;top:330;left:220;">	  
+			<img id="l114" src="./picture/0.png">
+		</div>
+		<div id="c115" style="position:absolute;top:330;left:330;">		  
+			<img id="l115" src="./picture/0.png">
+		</div> 
+		<div id="c116" style="position:absolute;top:110;left:220;">  
+			<img id="l116" src="./picture/0.png">
+		</div>
+		<div id="c117" style="position:absolute;top:110;left:330;">		  
+			<img id="l117" src="./picture/0.png">
+		</div>		   
+		<div id="c118" style="position:absolute;top:220;left:0;">  
+			<img id="l118" src="./picture/0.png">
+		</div>
+		<div id="c119" style="position:absolute;top:220;left:110;">	  
+			<img id="l119" src="./picture/0.png">
+		</div>	
+		<div id="c120" style="position:absolute;top:0;left:0">  
+		 <img id="l120" src="./picture/0.png">
+		</div>
+		<div id="c121" style="position:absolute;top:0;left:110;">  
+			<img id="l121" src="./picture/0.png">
+		</div>
+		<div id="c122" style="position:absolute;top:0;left:220;">  
+			<img id="l122" src="./picture/0.png">
+		</div>
+		<div id="c123" style="position:absolute;top:0;left:330;">  
+			<img id="l123" src="./picture/0.png">
+		</div>
+		<div id="c124" style="position:absolute;top:110;left:0;">  
+			<img id="l124" src="./picture/0.png">
+		</div>
+		<div id="c125" style="position:absolute;top:110;left:110;">  
+			<img id="l125" src="./picture/0.png">
+		</div>
+		<div id="c126" style="position:absolute;top:110;left:220;">  
+			<img id="l126" src="./picture/0.png">
+		</div>
+		<div id="c127" style="position:absolute;top:110;left:330;">		  
+			<img id="l127" src="./picture/0.png">
+		</div>		   
+		<div id="c128" style="position:absolute;top:220;left:0;">  
+			<img id="l128" src="./picture/0.png">
+		</div>
+		<div id="c129" style="position:absolute;top:220;left:110;">	  
+			<img id="l129" src="./picture/0.png">
+		</div>			 
+		<div id="c130" style="position:absolute;top:0;left:0">  
+		 <img id="l130" src="./picture/0.png">
+		</div>
+		<div id="c131" style="position:absolute;top:0;left:110;">  
+			<img id="l131" src="./picture/0.png">
+		</div>
+		<div id="c132" style="position:absolute;top:0;left:220;">  
+			<img id="l132" src="./picture/0.png">
+		</div>
+		<div id="c133" style="position:absolute;top:0;left:330;">  
+			<img id="l133" src="./picture/0.png">
+		</div>
+		<div id="c134" style="position:absolute;top:110;left:0;">  
+			<img id="l134" src="./picture/0.png">
+		</div>
+		<div id="c135" style="position:absolute;top:110;left:110;">  
+			<img id="l135" src="./picture/0.png">
+		</div>
+		<div id="c136" style="position:absolute;top:110;left:220;">  
+			<img id="l136" src="./picture/0.png">
+		</div>
+		<div id="c137" style="position:absolute;top:110;left:330;">		  
+			<img id="l137" src="./picture/0.png">
+		</div>		   
+		<div id="c138" style="position:absolute;top:220;left:0;">  
+			<img id="l138" src="./picture/0.png">
+		</div>
+		<div id="c139" style="position:absolute;top:220;left:110;">	  
+			<img id="l139" src="./picture/0.png">
+		</div>			 
+		<div id="c140" style="position:absolute;top:0;left:0">  
+		 <img id="l140" src="./picture/0.png">
+		</div>
+		<div id="c141" style="position:absolute;top:0;left:110;">  
+			<img id="l141" src="./picture/0.png">
+		</div>
+		<div id="c142" style="position:absolute;top:0;left:220;">  
+			<img id="l142" src="./picture/0.png">
+		</div>
+		<div id="c143" style="position:absolute;top:0;left:330;">  
+			<img id="l143" src="./picture/0.png">
+		</div>
+		<div id="c144" style="position:absolute;top:110;left:0;">  
+			<img id="l144" src="./picture/0.png">
+		</div>
+		<div id="c145" style="position:absolute;top:110;left:110;">  
+			<img id="l145" src="./picture/0.png">
+		</div>
+		<div id="c146" style="position:absolute;top:110;left:220;">  
+			<img id="l146" src="./picture/0.png">
+		</div>
+		<div id="c147" style="position:absolute;top:110;left:330;">		  
+			<img id="l147" src="./picture/0.png">
+		</div>		   
+		<div id="c148" style="position:absolute;top:220;left:0;">  
+			<img id="l148" src="./picture/0.png">
+		</div>
+		<div id="c149" style="position:absolute;top:220;left:110;">	  
+			<img id="l149" src="./picture/0.png">
+		</div>			 
+		<div id="c150" style="position:absolute;top:0;left:0">  
+		 <img id="l150" src="./picture/0.png">
+		</div>
+		<div id="c151" style="position:absolute;top:0;left:110;">  
+			<img id="l151" src="./picture/0.png">
+		</div>
+		<div id="c152" style="position:absolute;top:0;left:220;">  
+			<img id="l152" src="./picture/0.png">
+		</div>
+		<div id="c153" style="position:absolute;top:0;left:330;">  
+			<img id="l153" src="./picture/0.png">
+		</div>
+		<div id="c154" style="position:absolute;top:110;left:0;">  
+			<img id="l154" src="./picture/0.png">
+		</div>
+		<div id="c155" style="position:absolute;top:110;left:110;">  
+			<img id="l155" src="./picture/0.png">
+		</div>
+		<div id="c156" style="position:absolute;top:110;left:220;">  
+			<img id="l156" src="./picture/0.png">
+		</div>
+		<div id="c157" style="position:absolute;top:110;left:330;">		  
+			<img id="l157" src="./picture/0.png">
+		</div>		   
+		<div id="c158" style="position:absolute;top:220;left:0;">  
+			<img id="l158" src="./picture/0.png">
+		</div>
+		<div id="c159" style="position:absolute;top:220;left:110;">	  
+			<img id="l159" src="./picture/0.png">
+		</div>			 
+		<div id="c160" style="position:absolute;top:0;left:0">  
+		 <img id="l160" src="./picture/0.png">
+		</div>
+		<div id="c161" style="position:absolute;top:0;left:110;">  
+			<img id="l161" src="./picture/0.png">
+		</div>
+		<div id="c162" style="position:absolute;top:0;left:220;">  
+			<img id="l162" src="./picture/0.png">
+		</div>
+		<div id="c163" style="position:absolute;top:0;left:330;">  
+			<img id="l163" src="./picture/0.png">
+		</div>
+		<div id="c164" style="position:absolute;top:110;left:0;">  
+			<img id="l164" src="./picture/0.png">
+		</div>
+		<div id="c165" style="position:absolute;top:110;left:110;">  
+			<img id="l165" src="./picture/0.png">
+		</div>
+		<div id="c166" style="position:absolute;top:110;left:220;">  
+			<img id="l166" src="./picture/0.png">
+		</div>
+		<div id="c167" style="position:absolute;top:110;left:330;">		  
+			<img id="l167" src="./picture/0.png">
+		</div>		   
+		<div id="c168" style="position:absolute;top:220;left:0;">  
+			<img id="l168" src="./picture/0.png">
+		</div>
+		<div id="c169" style="position:absolute;top:220;left:110;">	  
+			<img id="l169" src="./picture/0.png">
+		</div>			 
+		<div id="c170" style="position:absolute;top:0;left:0">  
+		 <img id="l170" src="./picture/0.png">
+		</div>
+		<div id="c171" style="position:absolute;top:0;left:110;">  
+			<img id="l171" src="./picture/0.png">
+		</div>
+		<div id="c172" style="position:absolute;top:0;left:220;">  
+			<img id="l172" src="./picture/0.png">
+		</div>
+		<div id="c173" style="position:absolute;top:0;left:330;">  
+			<img id="l173" src="./picture/0.png">
+		</div>
+		<div id="c174" style="position:absolute;top:110;left:0;">  
+			<img id="l174" src="./picture/0.png">
+		</div>
+		<div id="c175" style="position:absolute;top:110;left:110;">  
+			<img id="l175" src="./picture/0.png">
+		</div>
+		<div id="c176" style="position:absolute;top:110;left:220;">  
+			<img id="l176" src="./picture/0.png">
+		</div>
+		<div id="c177" style="position:absolute;top:110;left:330;">		  
+			<img id="l177" src="./picture/0.png">
+		</div>		   
+		<div id="c178" style="position:absolute;top:220;left:0;">  
+			<img id="l178" src="./picture/0.png">
+		</div>
+		<div id="c179" style="position:absolute;top:220;left:110;">	  
+			<img id="l179" src="./picture/0.png">
+		</div>			 
+		<div id="c180" style="position:absolute;top:0;left:0">  
+		 <img id="l180" src="./picture/0.png">
+		</div>
+		<div id="c181" style="position:absolute;top:0;left:110;">  
+			<img id="l181" src="./picture/0.png">
+		</div>
+		<div id="c182" style="position:absolute;top:0;left:220;">  
+			<img id="l182" src="./picture/0.png">
+		</div>
+		<div id="c183" style="position:absolute;top:0;left:330;">  
+			<img id="l183" src="./picture/0.png">
+		</div>
+		<div id="c184" style="position:absolute;top:110;left:0;">  
+			<img id="l184" src="./picture/0.png">
+		</div>
+		<div id="c185" style="position:absolute;top:110;left:110;">  
+			<img id="l185" src="./picture/0.png">
+		</div>
+		<div id="c186" style="position:absolute;top:110;left:220;">  
+			<img id="l186" src="./picture/0.png">
+		</div>
+		<div id="c187" style="position:absolute;top:110;left:330;">		  
+			<img id="l187" src="./picture/0.png">
+		</div>		   
+		<div id="c188" style="position:absolute;top:220;left:0;">  
+			<img id="l188" src="./picture/0.png">
+		</div>
+		<div id="c189" style="position:absolute;top:220;left:110;">	  
+			<img id="l189" src="./picture/0.png">
+		</div>			 
+		<div id="c190" style="position:absolute;top:0;left:0">  
+		 <img id="l190" src="./picture/0.png">
+		</div>
+		<div id="c191" style="position:absolute;top:0;left:110;">  
+			<img id="l191" src="./picture/0.png">
+		</div>
+		<div id="c192" style="position:absolute;top:0;left:220;">  
+			<img id="l192" src="./picture/0.png">
+		</div>
+		<div id="c193" style="position:absolute;top:0;left:330;">  
+			<img id="l193" src="./picture/0.png">
+		</div>
+		<div id="c194" style="position:absolute;top:110;left:0;">  
+			<img id="l194" src="./picture/0.png">
+		</div>
+		<div id="c195" style="position:absolute;top:110;left:110;">  
+			<img id="l195" src="./picture/0.png">
+		</div>
+		<div id="c196" style="position:absolute;top:110;left:220;">  
+			<img id="l196" src="./picture/0.png">
+		</div>
+		<div id="c197" style="position:absolute;top:110;left:330;">		  
+			<img id="l197" src="./picture/0.png">
+		</div>		   
+		<div id="c198" style="position:absolute;top:220;left:0;">  
+			<img id="l198" src="./picture/0.png">
+		</div>
+		<div id="c199" style="position:absolute;top:220;left:110;">	  
+			<img id="l199" src="./picture/0.png">
+		</div>			 
+	</div>
+  <script language="javascript">
+
+	var na=new Array();
+	var score=0;     //  to memory the score;
+	var isbusy;
+	var isover;
+	var isfi;
+	var cellw=30;
+	var cellh=30;
+	var  hbace=50;
+	var  wbace=50;
+	var  nowBlock;
+	var  nowRotate;
+	var  nowX;
+	var  nowY;
+	
+	for(var i=0;i<24;i++){
+		na[i]=new Array();
+		for(var j=0;j<10;j++){
+			na[i][j]=0;
+		}
+	}	
+	var pattern=new Array();
+	for(var i=0;i<7;i++){
+		pattern[i]=new Array();
+		for (var j=0;j<4;j++){
+			pattern[i][j]=new Array();
+		}
+	}
+	
+	var nowPattern=new Array();
+	
+	for(var i=0;i<4;i++){
+		nowPattern[i]=new Array();
+	}
+	
+	inif();
+	
+	function inif(){
+		
+		inilab();
+		inipattern();
+		initNumTable();
+		//alert("in2");
+		newBlock();
+		//alert("in3");
+		handle();
+		drawAll();
+		//alert("in4");
+		isbusy=0;
+		isover=0;
+		//alert("in5");
+	}
+		
+	function inilab(){
+		for(var y=0;y<20;y++){
+			for(var x=0;x<10;x++){
+				document.getElementById("c"+(y*10+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*10+x)).style.top=y*cellh+hbace;
+				document.getElementById("l"+(y*10+x)).innerHTML ="";
+				document.getElementById("l"+(y*10+x)).style.backgroundColor  ="yellow";
+				document.getElementById("l"+(y*10+x)).src="./picture/0.png";
+				document.getElementById("restart").style.left=420;
+				document.getElementById("restart").style.top=20;
+				document.getElementById("restartB").style.fontSize=20;
+				document.getElementById("sc").style.top=20;
+				document.getElementById("sc").style.left=wbace;
+				document.getElementById("score").style.fontSize=20;
+				document.getElementById("gameover").style.display="none";
+				document.getElementById("gameover").style.left=20;
+				document.getElementById("gameover").style.top=170;
+				//alert("x="+x+",y="+y);
+				//document.getElementById("gameover").size.height=500;
+				
+			//	document.getElementById("l"+(y*4+x)).style.height = "500";;
+			//	document.getElementById("l"+(y*4+x)).style.labelFontSize="150";
+			}
+		}
+	 }
+
+	function inipattern(){
+		//alert("inipt");
+		pattern[0]=[          ////o
+					[0,0,0,0],
+					[0,0,0,0],
+					[1,1,0,0],
+					[1,1,0,0],
+					];
+		pattern[1]=[          ////l
+					[0,0,0,0],
+					[1,0,0,0],
+					[1,0,0,0],
+					[1,1,0,0],
+					];
+		pattern[2]=[          ////j
+					[0,0,0,0],
+					[0,1,0,0],
+					[0,1,0,0],
+					[1,1,0,0],
+					];
+		pattern[3]=[          ////z
+					[0,0,0,0],
+					[0,0,0,0],
+					[1,1,0,0],
+					[0,1,1,0],
+					];
+		pattern[4]=[          ////s
+					[0,0,0,0],
+					[0,0,0,0],
+					[0,1,1,0],
+					[1,1,0,0],
+					];
+		pattern[5]=[          ////t
+					[0,0,0,0],
+					[0,0,0,0],
+					[1,1,1,0],
+					[0,1,0,0],
+					];
+		pattern[6]=[          ////i
+					[0,0,0,0],
+					[0,0,0,0],
+					[0,0,0,0],
+					[1,1,1,1],
+					];	
+					
+	}
+		
+	function initNumTable(){
+		for(var i=0;i<24;i++){
+			for(var j=0;j<10;j++){
+				na[i][j]=0;
+			}
+		}
+	}
+
+	function drawAll(){
+		//alert("da1");
+		for(var i=0;i<20;i++){
+			for(var j=0;j<10;j++){
+				var num=na[19-i][j];
+				if(num==0)document.getElementById("l"+(i*10+j)).src="./picture/0.png";
+				else document.getElementById("l"+(i*10+j)).src="./picture/1.png";
+			}
+		}
+		setTimeout("drawAll()",30);
+	}
+	
+	function newBlock(){
+		var newb=Math.floor(Math.random()*7);
+		while(newb==7)Math.floor(Math.random()*7);
+		nowBlock=newb;
+		nowRotate=0;
+		nowX=4;
+		nowY=20;
+		//alert("newb= "+newb);
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				nowPattern[i][j]=pattern[nowBlock][i][j];
+			}
+		}
+		
+		setNowBlock();
+	}
+	
+	function setNowBlock(){
+		for(var i=0;i<23;i++){
+			for(var j=0;j<10;j++){
+				if(na[i][j]==3) na[i][j]=0;
+				//alert("na "+i+" "+j+" "+na[i][j]);
+			}
+		}
+		
+		for(var i=0;i<4;i++){
+			for (var j=0;j<4;j++){
+				if(nowY+i<0) var k;
+				else if(na[nowY+i][nowX+j]==1)var k;
+				else if(nowX+j<0) var k;
+				else na[nowY+i][nowX+j]=nowPattern[i][j]*3;
+			}
+		}
+		
+		//drawAll();
+	}
+	
+	function checkNowBlockStop(){
+		//alert("cbs1");
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				if(nowPattern[i][j]==1){
+					if(nowY+i-1<0)flag++;
+					else if(na[nowY+i-1][nowX+j]==1)flag++;
+				}
+			}
+		}
+		//alert("cbs2");
+		if(flag==0)return;
+		//alert("cbs21");
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){	
+				if(nowPattern[i][j]==1)na[nowY+i][nowX+j]=1;
+			}
+		}
+		//alert("cbs3");
+		newBlock();
+		//alert("cbs4");
+	}
+		
+	function checkSolveLine(){
+		var flag=0
+		
+		for(var i=0;i<20;i++){
+			flag=0;
+			for(j=0;j<10;j++){
+				if(na[0][j]==0)flag++;
+			}
+			if(flag==0)solveLine();
+			else break;
+		}
+	}
+	
+	function solveLine(){
+		for(var i=0;i<10;i++){
+			na[0][i]=0;
+		}
+		for(var i=0;i<10;i++){
+			for(var j=0;j<19;j++){
+				if(na[j+1][i]==1)na[j][i]=1;
+				if(na[j+1][i]==0)na[j][i]=0;
+			}
+		}
+		scorechange(1);
+	}
+	
+	function scorechange(point){
+		
+		score=score+point;
+		document.getElementById("score").innerHTML="score: "+score;
+	}
+	
+	function checkGameOver(){
+			//alert("cg1");
+		isgameover();
+		//	alert("cg3");
+		if(isover==1){
+			//alert("cg4");
+			document.getElementById("gameover").style.display="middle";
+			alert("game over ");
+		}
+		
+	}
+	
+	function rotate(){
+		var tem=new Array();
+		for (var i=0;i<4;i++)tem[i]= new Array();
+		
+		for (var i=0;i<4;i++){
+			for	(var j=0;j<4;j++){
+				tem[i][j]=nowPattern[j][3-i];
+			}
+		}
+		
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				if(tem[i][j]==1){
+					//alert("nowy"+nowY+" i"+i);
+					if(nowY+i<0)flag++;
+					else if(nowY+i>9)flag++;
+					else if(nowX+j<0)flag++;
+					else if(nowX+j>9)flag++;
+					else if(na[nowX+i][nowX+j]==1)flag++;
+				}
+			}
+		}
+		if (flag >0)return;
+		
+		for (var i=0;i<4;i++){
+			for	(var j=0;j<4;j++){
+				nowPattern[i][j]=tem[i][j];
+			}
+		}
+		
+		setNowBlock();
+	}
+	
+	function down(){
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				if(nowPattern[i][j]==1){
+					//alert("nowy"+nowY+" i"+i);
+					if(nowY+i-1<0)flag++;
+					else if(na[nowY+i-1][nowX+j]==1)flag++;
+				}
+			}
+		}
+		if (flag >0)return;
+	
+		nowY--;
+		setNowBlock();
+	}
+	
+	function left(){
+	
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				if(nowPattern[i][j]==1){
+					if(nowX+j-1<0)flag++;
+					else if(na[nowY+i][nowX+j-1]==1)flag++;
+				}
+			}
+		}
+		if (flag >0)return;
+		nowX--;
+		setNowBlock();
+	}
+	
+	function right(){
+		var flag=0;
+		for(var i=0;i<4;i++){
+			for(var j=0;j<4;j++){
+				if(nowPattern[i][j]==1){
+					if(nowX+j+1>9)flag++;
+					else if(na[nowY+i][nowX+j+1]==1)flag++;
+				}
+			}
+		}
+		if (flag >0)return;
+		
+		nowX++;
+		setNowBlock();
+	}	
+	
+	function isgameover(){           //to know is gameover or not
+		var flag=0;
+		for(var i=0;i<10;i++){
+			for(var j=20;j<24;j++){
+				if(na[j][i]==1){
+					flag=1;
+					break;
+				}
+			}
+		}
+    if(flag==0)isover=0;
+    else  isover=1;	
+	}	
+
+	function deletelab( y, x){
+		document.getElementById("c"+(y*10+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*10+x)).style.top=y*cellh+hbace;
+		//document.getElementById("l"+(y*4+x)).innerHTML="";
+		document.getElementById("l"+(y*10+x)).src="./picture/0.png";
+	}
+	
+	function newlab(y,x){
+		//alert("newlab :y="+y+" x="+x);
+		document.getElementById("c"+(y*10+x)).style.left=x*cellw+wbace;
+				document.getElementById("c"+(y*10+x)).style.top=y*cellh+hbace;
+		//document.getElementById("l"+(y*4+x)).innerHTML=num;
+		document.getElementById("l"+(y*10+x)).src="./picture/1.png";
+	}
+		
+	function handle(){
+		if(isover==1)return;
+		//if(isbusy==1)return;
+		//isbusy=1;
+		//alert("h1");
+		down();
+		//alert("h2");
+		checkNowBlockStop();
+		//alert("h3");
+		checkSolveLine();
+		//alert("h4");
+		//drawAll();
+		//alert("h5");
+		checkGameOver();
+//alert("h6");
+		//isbusy=0;
+		setTimeout("handle()",500);
+	}
+	
+	
+	
+	function keyp(event){
+		if(isover==1)return;
+		if(isbusy==0){
+			isbusy=1;
+			if (event.keyCode==37)
+				left();
+			else if (event.keyCode==38)
+				rotate();
+			else if (event.keyCode==39)
+				right();
+			else if (event.keyCode==40)
+				down();
+			isbusy=0;
+			//alert ("end");
+			//drawAll();
+		}
+		else alert("busy");
+	}	
+
+  </script>
+</body>
+</html>
