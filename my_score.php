@@ -37,7 +37,7 @@
     <table id="table" class="highlight centered">
         <thead>
             <tr>
-                <th>遊戲順序／名次</th>
+                <th>遊戲順序</th>
                 <th>遊戲</th>
                 <th>分數</th>
                 <th>時間</th>
@@ -47,7 +47,7 @@
             <?php
 $i=1;
 if(isset($_POST['game']) && $_POST['game']!="overall"){
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' AND `game`='$_POST[game]' ORDER BY `time` ASC, `score` DESC";
+	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' AND `game`='$_POST[game]' ORDER BY `score` DESC, `time` ASC";
 	$result=mysqli_query($link,$query);
 	if($result){
 		$rows=mysqli_fetch_array($result);
@@ -62,7 +62,7 @@ if(isset($_POST['game']) && $_POST['game']!="overall"){
 		}
 	}
 }else{
-	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `score` DESC, `time` ASC";
+	$query="SELECT `game`, `score`, `time` FROM `score` WHERE `username`='$_SESSION[account]' ORDER BY `time` ASC, `score` DESC";
 	$result=mysqli_query($link,$query);
 	if($result){
 		$rows=mysqli_fetch_array($result);
