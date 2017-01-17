@@ -626,7 +626,7 @@
     var cellw = 30;
     var cellh = 30;
     var hbace = 50;
-    var wbace = 50;
+    var wbace = 150;
     var nowBlock;
     var nowRotate;
     var nowX;
@@ -663,9 +663,11 @@
         newBlock();
         //alert("in3");
         handle();
-        drawAll();
+        khandle();
         //alert("in4");
-        isbusy = 0;
+        nowkey = 0;
+		isbusy = 0;
+		iskbusy = 0;
         isover = 0;
         //alert("in5");
     }
@@ -698,48 +700,48 @@
 
     function inipattern() {
         //alert("inipt");
-        pattern[0] = [ ////o
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [1, 1, 0, 0],
-            [1, 1, 0, 0],
-        ];
-        pattern[1] = [ ////l
-            [0, 0, 0, 0],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0],
-            [1, 1, 0, 0],
-        ];
-        pattern[2] = [ ////j
-            [0, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [1, 1, 0, 0],
-        ];
-        pattern[3] = [ ////z
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [1, 1, 0, 0],
-            [0, 1, 1, 0],
-        ];
-        pattern[4] = [ ////s
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 1, 1, 0],
-            [1, 1, 0, 0],
-        ];
-        pattern[5] = [ ////t
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [1, 1, 1, 0],
-            [0, 1, 0, 0],
-        ];
-        pattern[6] = [ ////i
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [1, 1, 1, 1],
-        ];
+        pattern[0]=[          ////o
+					[0,0,0,0],
+					[0,1,1,0],
+					[0,1,1,0],
+					[0,0,0,0],
+					];
+		pattern[1]=[          ////l
+					[0,1,0,0],
+					[0,1,0,0],
+					[0,1,1,0],
+					[0,0,0,0],
+					];
+		pattern[2]=[          ////j
+					[0,0,1,0],
+					[0,0,1,0],
+					[0,1,1,0],
+					[0,0,0,0],
+					];
+		pattern[3]=[          ////z
+					[0,0,0,0],
+					[1,1,0,0],
+					[0,1,1,0],
+					[0,0,0,0],
+					];
+		pattern[4]=[          ////s
+					[0,0,0,0],
+					[0,1,1,0],
+					[1,1,0,0],
+					[0,0,0,0],
+					];
+		pattern[5]=[          ////t
+					[0,0,0,0],
+					[1,1,1,0],
+					[0,1,0,0],
+					[0,0,0,0],
+					];
+		pattern[6]=[          ////i
+					[0,0,0,0],
+					[0,0,0,0],
+					[1,1,1,1],
+					[0,0,0,0],
+					];	
 
     }
 
@@ -760,7 +762,7 @@
                 else document.getElementById("l" + (i * 10 + j)).src = "./picture/1.png";
             }
         }
-        setTimeout("drawAll()", 30);
+      //  setTimeout("drawAll()", 30);
     }
 
     function newBlock() {
@@ -819,36 +821,45 @@
                 if (nowPattern[i][j] == 1) na[nowY + i][nowX + j] = 1;
             }
         }
-        //alert("cbs3");
+		 
+		checkSolveLine();
+
+        checkGameOver();
+		
         newBlock();
-        //alert("cbs4");
+ 
     }
 
-    function checkSolveLine() {
-        var flag = 0
+    function checkSolveLine(){
+		var flag=0
+		
+		for(var i=19;i>=0;i--){
+			flag=0;
+			for(j=0;j<10;j++){
+				if(na[i][j]==1){
+					flag++;
+					//break;
+				}
+				else break;
+			}
+			if(flag==10)solveLine(i);
+			
+		}
+	}
 
-        for (var i = 0; i < 20; i++) {
-            flag = 0;
-            for (j = 0; j < 10; j++) {
-                if (na[0][j] == 0) flag++;
-            }
-            if (flag == 0) solveLine();
-            else break;
-        }
-    }
-
-    function solveLine() {
-        for (var i = 0; i < 10; i++) {
-            na[0][i] = 0;
-        }
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 19; j++) {
-                if (na[j + 1][i] == 1) na[j][i] = 1;
-                if (na[j + 1][i] == 0) na[j][i] = 0;
-            }
-        }
-        scorechange(1);
-    }
+    function solveLine(k){
+		//alert("sli="+k);
+		for(var i=0;i<10;i++){
+			na[k][i]=0;
+		}
+		for(var i=0;i<10;i++){
+			for(var j=k;j<19;j++){
+				if(na[j+1][i]==1)na[j][i]=1;
+				else if(na[j+1][i]==0)na[j][i]=0;
+			}
+		}
+		scorechange(1);
+	}
 
     function scorechange(point) {
 
@@ -888,7 +899,7 @@
             }
             oXHR.send(para);
         } else {
-            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">尚未登入</p>";
+            document.getElementById("result").innerHTML = "<p class=\"yellow-text text-darken-4 center-align\">尚未?�入</p>";
         }
     }
 
@@ -908,10 +919,10 @@
                 if (tem[i][j] == 1) {
                     //alert("nowy"+nowY+" i"+i);
                     if (nowY + i < 0) flag++;
-                    else if (nowY + i > 9) flag++;
+                    else if (nowY + i > 19) flag++;
                     else if (nowX + j < 0) flag++;
                     else if (nowX + j > 9) flag++;
-                    else if (na[nowX + i][nowX + j] == 1) flag++;
+                    else if (na[nowY + i][nowX + j] == 1) flag++;
                 }
             }
         }
@@ -1006,41 +1017,53 @@
 
     function handle() {
         if (isover == 1) return;
-        //if(isbusy==1)return;
-        //isbusy=1;
+        if(isbusy==0){
+        isbusy=1;
         //alert("h1");
-        down();
-        //alert("h2");
-        checkNowBlockStop();
-        //alert("h3");
-        checkSolveLine();
-        //alert("h4");
-        //drawAll();
-        //alert("h5");
-        checkGameOver();
-        //alert("h6");
-        //isbusy=0;
+		checkNowBlockStop();
+		down();
+		isbusy=0;
+		}
         setTimeout("handle()", 500);
     }
 
-
+	function khandle(){
+		if (isover == 1) return;
+        if (isbusy == 0) {
+            isbusy = 1;
+            if (nowkey== 1)
+                left();
+            else if (nowkey == 2)
+                rotate();
+            else if (nowkey== 3)
+                right();
+            else if (nowkey == 4)
+                down();
+			nowkey=0
+            drawAll();
+			isbusy = 0;
+            //alert ("end");
+            //drawAll();
+        } //else alert("busy");	
+		setTimeout("khandle()", 30);
+	}
 
     function keyp(event) {
         if (isover == 1) return;
-        if (isbusy == 0) {
-            isbusy = 1;
+        if (iskbusy == 0) {
+            iskbusy = 1;			
             if (event.keyCode == 37)
-                left();
+                nowkey=1;
             else if (event.keyCode == 38)
-                rotate();
+                 nowkey=2;
             else if (event.keyCode == 39)
-                right();
+                 nowkey=3;
             else if (event.keyCode == 40)
-                down();
-            isbusy = 0;
+                 nowkey=4;
+            iskbusy = 0;
             //alert ("end");
             //drawAll();
-        } else alert("busy");
+        } //else alert("busy");
     }
     </script>
     <div id="result" class="col s12"></div>
